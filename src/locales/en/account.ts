@@ -32,7 +32,7 @@ const account: typeof id = {
     title: "About",
     desc: "Nontonin is a cinema ticketing app with a 3D seat preview. Before you buy, you can see what the screen looks like from the seat you pick.",
     creditTitle: "Design inspiration",
-    credit: "The 3D seat preview in this app is inspired by the \"{{concept}}\" UI/UX concept by {{designer}}.",
+    credit: "The 3D seat preview in this app is inspired by a UI/UX concept by {{designer}}.",
     openOriginal: "See the original work",
     disclaimer: "Every cinema, film and poster in this app is fictional and made for the demo.",
     disclaimerTmdb: "The cinemas, showtimes and payments in this app are fictional and made for the demo.",

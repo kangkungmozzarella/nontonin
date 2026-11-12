@@ -32,7 +32,7 @@ export default function AboutScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                         <Text weight="semibold" color={colors.text}>{t("about.creditTitle")}</Text>
           </View>
-          <Text>{t("about.credit", { concept: DESIGN_CREDIT.concept, designer: DESIGN_CREDIT.designer })}</Text>
+          <Text>{t("about.credit", { designer: DESIGN_CREDIT.designer })}</Text>
           {!!DESIGN_CREDIT.url && (
             <Button
               variant="secondary"

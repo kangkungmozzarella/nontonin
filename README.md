@@ -4,7 +4,7 @@ Aplikasi mobile pemesanan tiket bioskop dengan **pratinjau kursi 3D**: ketuk kur
 
 Dibuat dengan Expo (SDK 58), React Native, React Navigation, react-query, dan Three.js (`@react-three/fiber/native` di atas `expo-gl`). Struktur folder mengikuti kurosim-mobile.
 
-Interaksi pratinjau kursi 3D terinspirasi dari konsep UI/UX "Meridian" karya Ramin Nasibov. Kreditnya tampil di halaman Tentang. Isi `DESIGN_CREDIT.url` di `src/common/constants/app.ts` dengan tautan karya aslinya agar tombol "Lihat karya aslinya" muncul.
+Interaksi pratinjau kursi 3D terinspirasi dari konsep UI/UX karya Ramin Nasibov ([postingan aslinya](https://www.instagram.com/reel/DfgHVQyD98i/)). Kreditnya tampil di halaman Tentang dan diatur di `DESIGN_CREDIT` pada `src/common/constants/app.ts`.
 
 ## Menjalankan
 
@@ -78,4 +78,4 @@ Bioskop dan jadwal tayang di aplikasi ini fiktif. Film demo (saat tanpa token TM
 
 ## Lisensi
 
-Kode di repo ini memakai lisensi [MIT](LICENSE). Lisensi itu tidak mencakup data dan gambar film dari TMDB, yang tetap tunduk pada ketentuan TMDB. Konsep UI/UX terinspirasi dari "Meridian" karya Ramin Nasibov.
+Kode di repo ini memakai lisensi [MIT](LICENSE). Lisensi itu tidak mencakup data dan gambar film dari TMDB, yang tetap tunduk pada ketentuan TMDB. Konsep UI/UX terinspirasi dari karya Ramin Nasibov.

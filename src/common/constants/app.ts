@@ -7,8 +7,7 @@ export const APP_VERSION = Constants.expoConfig?.version ?? "1.0.0";
 // shared publicly by the designer below; fill in `url` with the original post.
 export const DESIGN_CREDIT = {
   designer: "Ramin Nasibov",
-  concept: "Meridian",
-  url: "",
+  url: "https://www.instagram.com/reel/DfgHVQyD98i/",
 } as const;
 
 export const MAX_SEATS_PER_ORDER = 6;

@@ -30,7 +30,7 @@ const account = {
     title: "Tentang",
     desc: "Nontonin adalah aplikasi pemesanan tiket bioskop dengan pratinjau kursi 3D. Sebelum membeli, kamu bisa melihat seperti apa layar dari kursi yang kamu pilih.",
     creditTitle: "Inspirasi desain",
-    credit: "Interaksi pratinjau kursi 3D di aplikasi ini terinspirasi dari konsep UI/UX \"{{concept}}\" karya {{designer}}.",
+    credit: "Interaksi pratinjau kursi 3D di aplikasi ini terinspirasi dari konsep UI/UX karya {{designer}}.",
     openOriginal: "Lihat karya aslinya",
     disclaimer: "Semua bioskop, film, dan poster di aplikasi ini fiktif dan dibuat untuk demo.",
     disclaimerTmdb: "Bioskop, jadwal tayang, dan pembayaran di aplikasi ini fiktif dan dibuat untuk demo.",
