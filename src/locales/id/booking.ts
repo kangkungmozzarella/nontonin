@@ -19,6 +19,8 @@ const booking = {
     max: "Maksimal {{max}} kursi per transaksi",
     drag: "Geser untuk melihat sekeliling",
     backToMap: "Denah kursi",
+    sheetShow: "Tampilkan detail kursi",
+    sheetHide: "Sembunyikan detail kursi",
     pick: "Pilih kursi ini",
     unpick: "Batalkan kursi ini",
     picked: "Kursi {{seat}} dipilih",

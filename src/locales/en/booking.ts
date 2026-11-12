@@ -21,6 +21,8 @@ const booking: typeof id = {
     max: "Up to {{max}} seats per order",
     drag: "Drag to look around",
     backToMap: "Seat map",
+    sheetShow: "Show seat details",
+    sheetHide: "Hide seat details",
     pick: "Pick this seat",
     unpick: "Remove this seat",
     picked: "Seat {{seat}} picked",
