@@ -8,6 +8,11 @@ const home: typeof id = {
   nearby: "Cinemas near you",
   inCity: "Cinemas in {{city}}",
   releaseOn: "Opens {{date}}",
+  promo: {
+    feature: { title: "See the screen from your seat", subtitle: "3D preview before you book {{film}}" },
+    discount: { title: "Mon–Thu, 20% off", subtitle: "On every film at Nontonin Regular" },
+    premiere: { subtitle: "Opens {{date}} · pre-sale opens soon" },
+  },
   cinemas: {
     title: "Cinemas",
     subtitle_one: "{{count}} cinema in {{city}}",

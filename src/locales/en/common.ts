@@ -18,7 +18,7 @@ const common: typeof id = {
   studios_other: "{{count}} studios",
   tabs: { home: "Home", cinemas: "Cinemas", tickets: "Tickets", profile: "Profile" },
   tier: { premiere: "Premiere", regular: "Regular" },
-  rating: { SU: "All ages", "13+": "13 and over", "17+": "17 and over" },
+  rating: { SU: "All ages", "13+": "13 and over", "17+": "17 and over", "21+": "21 and over" },
   genre: {
     adventure: "Adventure",
     drama: "Drama",

@@ -165,13 +165,22 @@ export function buildTheater() {
   const screenMat = buildScreen(group);
 
   let tex: THREE.Texture | null = null;
+  let base = { x: 0.03, y: 0.03 };
   return {
     group,
     paintSeats,
     setFilmFrame(t: THREE.Texture) {
       t.colorSpace = THREE.SRGBColorSpace;
-      t.repeat.set(0.94, 0.94); // slight crop so the slow pan never shows an edge
-      t.offset.set(0.03, 0.03);
+      // Cover-fit the frame to the 2.39:1 screen (TMDB backdrops are 16:9),
+      // cropping a further 6% so the slow pan never shows an edge
+      const img = t.image as { width?: number; height?: number } | undefined;
+      const imgA = img?.width && img?.height ? img.width / img.height : SCREEN.w / SCREEN.h;
+      const scrA = SCREEN.w / SCREEN.h;
+      const rx = imgA < scrA ? 0.94 : (0.94 * scrA) / imgA;
+      const ry = imgA < scrA ? (0.94 * imgA) / scrA : 0.94;
+      t.repeat.set(rx, ry);
+      base = { x: (1 - rx) / 2, y: (1 - ry) / 2 };
+      t.offset.set(base.x, base.y);
       tex = t;
       screenMat.map = t;
       screenMat.color.set(0xffffff);
@@ -180,8 +189,8 @@ export function buildTheater() {
     // slow drift across the film frame, like the camera is panning
     tick(now: number) {
       if (!tex) return;
-      tex.offset.x = 0.03 + Math.sin(now * 0.00005) * 0.025;
-      tex.offset.y = 0.03 + Math.cos(now * 0.00004) * 0.012;
+      tex.offset.x = base.x + Math.sin(now * 0.00005) * Math.min(0.025, base.x * 0.85);
+      tex.offset.y = base.y + Math.cos(now * 0.00004) * Math.min(0.012, base.y * 0.85);
     },
     dispose() {
       group.traverse((o) => {

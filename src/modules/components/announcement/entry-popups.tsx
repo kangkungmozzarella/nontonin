@@ -4,11 +4,9 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { NavigationArrowIcon, XIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
-import { FilmArt } from "@constants/assets";
 import { localStorage, StorageKeys } from "@helpers/local-storage";
 import { useAppReady } from "@hooks/use-app-ready";
 import { useCity } from "@hooks/use-city";
-import { useLang } from "@hooks/use-lang";
 import { nearestCity, useUserLocation } from "@hooks/use-user-location";
 import { useGetPromos } from "@api-hooks/promos";
 import { todayKey } from "@common/api/mock/server";
@@ -110,28 +108,27 @@ function PromoPopup({
   onClose: (forToday: boolean) => void;
 }) {
   const { t } = useTranslation();
-  const lang = useLang();
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const artW = Math.min(width - 48, 380); // matches the Popup card width
   return (
     <Popup visible={visible} onRequestClose={() => onClose(false)}>
       <View>
-        <Image source={FilmArt[promo.filmId].still} style={{ width: artW, height: artW / 1.6 }} resizeMode="cover" />
+        <Image source={promo.film.backdrop} style={{ width: artW, height: artW / 1.6 }} resizeMode="cover" />
         <IconButton label={t("close")} glass size={34} style={styles.close} onPress={() => onClose(false)}>
           <XIcon size={16} color={colors.text} weight="bold" />
         </IconButton>
       </View>
       <View style={styles.promoBody}>
-        <Text variant="h2" weight="bold">{promo.title[lang]}</Text>
-        <Text color={colors.muted}>{promo.subtitle[lang]}</Text>
+        <Text variant="h2" weight="bold">{promo.title}</Text>
+        <Text color={colors.muted}>{promo.subtitle}</Text>
         <Button
           size="lg"
           style={{ marginTop: 10 }}
           label={t(`promo.cta.${promo.kind}`)}
           onPress={() => {
             onClose(false);
-            navigation.navigate("FilmDetail", { filmId: promo.filmId });
+            navigation.navigate("FilmDetail", { filmId: promo.film.id });
           }}
         />
         <Pressable onPress={() => onClose(true)} hitSlop={8} style={{ alignSelf: "center", paddingVertical: 6 }}>

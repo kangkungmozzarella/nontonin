@@ -4,8 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
-import { useLang } from "@hooks/use-lang";
 import { useGetPromos, type Promo } from "@api-hooks/promos";
 import Text from "@components/text";
 import Skeleton from "@components/skeleton";
@@ -21,7 +19,6 @@ export default function BannerCarousel() {
   const itemH = Math.round(itemW / 2.1);
   const { data } = useGetPromos();
   const navigation = useNavigation();
-  const lang = useLang();
   const list = React.useRef<FlatList<Promo>>(null);
   const [index, setIndex] = React.useState(0);
   const dragging = React.useRef(false);
@@ -57,11 +54,11 @@ export default function BannerCarousel() {
           <PressableScale
             scaleTo={0.98}
             accessibilityRole="button"
-            accessibilityLabel={item.title[lang]}
-            onPress={() => navigation.navigate("FilmDetail", { filmId: item.filmId })}
+            accessibilityLabel={item.title}
+            onPress={() => navigation.navigate("FilmDetail", { filmId: item.film.id })}
             style={[styles.banner, { width: itemW, height: itemH }]}
           >
-            <Image source={FilmArt[item.filmId].still} style={{ position: "absolute", width: itemW, height: itemH }} resizeMode="cover" />
+            <Image source={item.film.backdrop} style={{ position: "absolute", width: itemW, height: itemH }} resizeMode="cover" />
             <LinearGradient
               colors={["rgba(8,8,10,0)", "rgba(8,8,10,0.85)"]}
               start={{ x: 0, y: 0.25 }}
@@ -70,8 +67,8 @@ export default function BannerCarousel() {
             />
             <View style={styles.copy}>
               <View style={[styles.kind, { backgroundColor: KIND_COLOR[item.kind] }]} />
-              <Text variant="h2" weight="bold">{item.title[lang]}</Text>
-              <Text variant="small" color="rgba(243,242,239,0.8)">{item.subtitle[lang]}</Text>
+              <Text variant="h2" weight="bold" numberOfLines={1}>{item.title}</Text>
+              <Text variant="small" color="rgba(243,242,239,0.8)" numberOfLines={1}>{item.subtitle}</Text>
             </View>
           </PressableScale>
         )}

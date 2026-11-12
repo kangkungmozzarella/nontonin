@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { MapPinIcon, NavigationArrowIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
 import { formatDistance, formatDuration, haversineKm } from "@helpers/format";
 import { useLang } from "@hooks/use-lang";
 import { useUserLocation } from "@hooks/use-user-location";
@@ -83,11 +82,13 @@ export default function CinemaDetailScreen({ route, navigation }: RootScreenProp
                   onPress={() => navigation.navigate("FilmDetail", { filmId: film.id })}
                   accessibilityRole="button"
                 >
-                  <Image source={FilmArt[film.id].poster} style={styles.thumb} />
+                  <Image source={film.poster} style={styles.thumb} />
                   <View style={{ flex: 1, gap: 3 }}>
                     <Text weight="semibold" variant="h3">{film.title}</Text>
                     <Text variant="small" color={colors.muted}>
-                      {[film.rating, formatDuration(film.duration, lang), t(`common:studio`, { n: showtimes[0].studio })].join(" · ")}
+                      {[film.rating, film.duration != null ? formatDuration(film.duration, lang) : film.genres[0], t("common:studio", { n: showtimes[0].studio })]
+                        .filter(Boolean)
+                        .join(" · ")}
                     </Text>
                   </View>
                 </PressableScale>

@@ -5,8 +5,6 @@ import { useTranslation } from "react-i18next";
 import { TicketIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
-import { CINEMAS, FILMS } from "@common/api/mock/data";
 import { formatDate } from "@helpers/format";
 import { useLang } from "@hooks/use-lang";
 import { useBookings } from "@hooks/use-bookings";
@@ -64,8 +62,6 @@ function TicketRow({ booking, dim }: { booking: Booking; dim?: boolean }) {
   const navigation = useNavigation();
   const lang = useLang();
   const { t } = useTranslation("common");
-  const film = FILMS.find((f) => f.id === booking.filmId);
-  const cinema = CINEMAS.find((c) => c.id === booking.cinemaId);
   return (
     <PressableScale
       scaleTo={0.98}
@@ -73,11 +69,11 @@ function TicketRow({ booking, dim }: { booking: Booking; dim?: boolean }) {
       style={[styles.ticket, dim && { opacity: 0.6 }]}
       accessibilityRole="button"
     >
-      <Image source={FilmArt[booking.filmId]?.poster} style={styles.thumb} />
+      <Image source={booking.poster} style={styles.thumb} />
       <View style={{ flex: 1, gap: 4 }}>
-        <Text weight="bold" variant="h3" numberOfLines={1}>{film?.title}</Text>
+        <Text weight="bold" variant="h3" numberOfLines={1}>{booking.filmTitle}</Text>
         <Text variant="small" color={colors.muted} numberOfLines={1}>
-          {cinema?.name} · {t("studio", { n: booking.studio })}
+          {booking.cinemaName} · {t("studio", { n: booking.studio })}
         </Text>
         <Text variant="small">{formatDate(booking.date, "EEE, d MMM", lang)} · {booking.time}</Text>
         <Text variant="small" weight="semibold" color={colors.sel}>{booking.seats.join(", ")}</Text>

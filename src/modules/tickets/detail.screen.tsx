@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 import { CubeIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
-import { CINEMAS, FILMS } from "@common/api/mock/data";
 import { formatDate, formatIDR } from "@helpers/format";
 import { useLang } from "@hooks/use-lang";
 import { useBookings } from "@hooks/use-bookings";
@@ -31,21 +29,19 @@ export default function TicketDetailScreen({ route, navigation }: RootScreenProp
       </Screen>
     );
   }
-  const film = FILMS.find((f) => f.id === b.filmId)!;
-  const cinema = CINEMAS.find((c) => c.id === b.cinemaId)!;
 
   return (
     <Screen>
-      <Header title={film.title} />
+      <Header title={b.filmTitle} />
       <ScrollView contentContainerStyle={{ padding: GUTTER, paddingBottom: 40, gap: 16 }}>
         <View style={styles.ticket}>
           <View style={styles.hero}>
-            <Image source={FilmArt[film.id].still} style={{ width: "100%", height: 120 }} resizeMode="cover" />
+            <Image source={b.backdrop} style={{ width: "100%", height: 120 }} resizeMode="cover" />
             <LinearGradient colors={["rgba(28,28,32,0)", colors.panel2]} style={StyleSheet.absoluteFill} />
           </View>
           <View style={styles.body}>
-            <Text variant="h1" weight="bold">{film.title}</Text>
-            <Text color={colors.muted}>{cinema.name}</Text>
+            <Text variant="h1" weight="bold">{b.filmTitle}</Text>
+            <Text color={colors.muted}>{b.cinemaName}</Text>
             <View style={styles.grid}>
               <Field label={t("tickets.date")} value={formatDate(b.date, "EEE, d MMM yyyy", lang)} />
               <Field label={t("tickets.time")} value={b.time} />

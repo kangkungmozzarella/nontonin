@@ -7,7 +7,7 @@ import { OVERVIEW, TheaterController } from "./camera-controller";
 
 interface Props {
   controller: TheaterController;
-  filmFrame: number; // require()'d image shown on the cinema screen
+  filmFrame: number | string; // bundled image id or image URL shown on the cinema screen
   taken: ReadonlySet<string>;
   mine: ReadonlySet<string>;
   active: boolean; // render continuously; otherwise the loop sleeps
@@ -35,7 +35,7 @@ function Theater({
   React.useEffect(() => {
     let cancelled = false;
     new THREE.TextureLoader().load(
-      filmFrame as unknown as string, // R3F native's loader accepts asset module ids
+      filmFrame as string, // R3F native's loader also accepts bundled asset ids
       (t) => {
         if (!cancelled) theater.setFilmFrame(t);
       },

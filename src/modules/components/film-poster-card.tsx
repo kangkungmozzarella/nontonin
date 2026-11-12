@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { StarIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
 import { formatDate } from "@helpers/format";
 import { useLang } from "@hooks/use-lang";
 import Text from "@components/text";
@@ -26,10 +25,12 @@ export default function FilmPosterCard({ film, width = POSTER_W }: { film: Film;
       style={{ width }}
     >
       <View>
-        <Image source={FilmArt[film.id]?.poster} style={[styles.poster, { width, height: width * 1.5 }]} />
-        <View style={styles.badge}>
-          <Text variant="tiny" weight="bold">{film.rating}</Text>
-        </View>
+        <Image source={film.poster} style={[styles.poster, { width, height: width * 1.5 }]} />
+        {film.rating && (
+          <View style={styles.badge}>
+            <Text variant="tiny" weight="bold">{film.rating}</Text>
+          </View>
+        )}
       </View>
       <Text weight="semibold" numberOfLines={1} style={{ marginTop: 10 }}>{film.title}</Text>
       {film.status === "soon" && film.releaseDate ? (
@@ -46,7 +47,7 @@ export default function FilmPosterCard({ film, width = POSTER_W }: { film: Film;
             </>
           )}
           <Text variant="small" color={colors.muted} numberOfLines={1} style={{ flex: 1 }}>
-            {t(`common:genre.${film.genres[0]}`)}
+            {film.genres[0] ?? ""}
           </Text>
         </View>
       )}

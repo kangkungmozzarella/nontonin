@@ -16,7 +16,7 @@ const common = {
   studios_other: "{{count}} studio",
   tabs: { home: "Beranda", cinemas: "Bioskop", tickets: "Tiket", profile: "Profil" },
   tier: { premiere: "Premiere", regular: "Reguler" },
-  rating: { SU: "Semua umur", "13+": "13 tahun ke atas", "17+": "17 tahun ke atas" },
+  rating: { SU: "Semua umur", "13+": "13 tahun ke atas", "17+": "17 tahun ke atas", "21+": "21 tahun ke atas" },
   genre: {
     adventure: "Petualangan",
     drama: "Drama",

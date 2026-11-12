@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { CaretLeftIcon, ClockIcon, MapPinIcon, StarIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
 import { formatDate, formatDuration } from "@helpers/format";
 import { useLang } from "@hooks/use-lang";
 import { useCity } from "@hooks/use-city";
@@ -49,7 +48,7 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
     <View style={styles.root}>
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 32 }}>
         <View style={{ width, height: heroH, overflow: "hidden" }}>
-          <Image source={FilmArt[f.id].still} style={{ width, height: heroH }} resizeMode="cover" />
+          <Image source={f.backdrop} style={{ width, height: heroH }} resizeMode="cover" />
           <LinearGradient
             colors={["rgba(11,10,14,0.35)", "rgba(11,10,14,0)", colors.bg]}
             locations={[0, 0.35, 1]}
@@ -58,15 +57,21 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
         </View>
 
         <View style={styles.titleBlock}>
-          <Image source={FilmArt[f.id].poster} style={styles.poster} />
+          <Image source={f.poster} style={styles.poster} />
           <View style={{ flex: 1, gap: 6, paddingTop: 52 }}>
             <Text variant="h1" weight="bold">{f.title}</Text>
             <View style={styles.metaRow}>
-              <View style={styles.rating}>
-                <Text variant="tiny" weight="bold">{f.rating}</Text>
-              </View>
-              <ClockIcon size={13} color={colors.muted} />
-              <Text variant="small" color={colors.muted}>{formatDuration(f.duration, lang)}</Text>
+              {f.rating && (
+                <View style={styles.rating}>
+                  <Text variant="tiny" weight="bold">{f.rating}</Text>
+                </View>
+              )}
+              {f.duration != null && (
+                <>
+                  <ClockIcon size={13} color={colors.muted} />
+                  <Text variant="small" color={colors.muted}>{formatDuration(f.duration, lang)}</Text>
+                </>
+              )}
               {f.score != null && (
                 <>
                   <StarIcon size={13} color={colors.warm} weight="fill" />
@@ -74,7 +79,7 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
                 </>
               )}
             </View>
-            <Text variant="small" color={colors.muted}>{f.genres.map((g) => t(`common:genre.${g}`)).join(", ")}</Text>
+            <Text variant="small" color={colors.muted}>{f.genres.join(", ")}</Text>
           </View>
         </View>
 
@@ -82,12 +87,12 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
           <Text variant="h3" weight="semibold">{t("film.synopsis")}</Text>
           <Pressable onPress={() => setExpanded((x) => !x)}>
             <Text color={colors.muted} numberOfLines={expanded ? undefined : 3} style={{ marginTop: 6 }}>
-              {f.synopsis[lang]}
+              {f.synopsis || "–"}
             </Text>
           </Pressable>
           <View style={styles.credits}>
-            <Credit label={t("film.director")} value={f.director} />
-            <Credit label={t("film.cast")} value={f.cast.join(", ")} />
+            {!!f.director && <Credit label={t("film.director")} value={f.director} />}
+            {f.cast.length > 0 && <Credit label={t("film.cast")} value={f.cast.join(", ")} />}
           </View>
         </View>
 

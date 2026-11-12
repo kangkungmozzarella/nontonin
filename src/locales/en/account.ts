@@ -35,6 +35,8 @@ const account: typeof id = {
     credit: "The 3D seat preview in this app is inspired by the \"{{concept}}\" UI/UX concept by {{designer}}.",
     openOriginal: "See the original work",
     disclaimer: "Every cinema, film and poster in this app is fictional and made for the demo.",
+    disclaimerTmdb: "The cinemas, showtimes and payments in this app are fictional and made for the demo.",
+    tmdb: "Film data and images are provided by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.",
     builtWith: "Built with Expo, React Native and Three.js",
   },
 };

@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { BankIcon, CheckCircleIcon, CircleIcon, CreditCardIcon, QrCodeIcon, WalletIcon, type Icon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
 import { formatDate, formatIDR } from "@helpers/format";
 import { orderTotals } from "@helpers/pricing";
 import { useLang } from "@hooks/use-lang";
@@ -62,7 +61,7 @@ export default function CheckoutScreen({ route, navigation }: RootScreenProps<"C
 
   const pay = () =>
     create.mutate(
-      { showtimeId, seats, payment: method },
+      { showtimeId, seats, payment: method, film: { title: film.data.title, poster: film.data.poster, backdrop: film.data.backdrop } },
       {
         onSuccess: (booking) => {
           add(booking);
@@ -85,7 +84,7 @@ export default function CheckoutScreen({ route, navigation }: RootScreenProps<"C
       <Header title={t("checkout.title")} />
       <ScrollView contentContainerStyle={{ padding: GUTTER, gap: 16, paddingBottom: 140 }}>
         <View style={[styles.card, styles.filmRow]}>
-          <Image source={FilmArt[film.data.id].poster} style={styles.thumb} />
+          <Image source={film.data.poster} style={styles.thumb} />
           <View style={{ flex: 1, gap: 4 }}>
             <Text variant="h3" weight="bold">{film.data.title}</Text>
             <Text variant="small" color={colors.muted}>{cinema.data.name} · {t("common:studio", { n: st.studio })}</Text>

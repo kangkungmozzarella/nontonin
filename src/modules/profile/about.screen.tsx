@@ -1,11 +1,12 @@
 import React from "react";
-import { Image, Linking, ScrollView, StyleSheet, View } from "react-native";
+import { Image, Linking, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { ArrowSquareOutIcon, SparkleIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
 import { APP_NAME, APP_VERSION, DESIGN_CREDIT } from "@constants/app";
 import { BrandMark } from "@constants/assets";
+import { catalog } from "@common/api/catalog";
 import Screen from "@components/screen";
 import Header from "@components/header";
 import Text from "@components/text";
@@ -46,7 +47,13 @@ export default function AboutScreen() {
         </View>
 
         <View style={{ gap: 6 }}>
-          <Text variant="small" color={colors.dim}>{t("about.disclaimer")}</Text>
+          {catalog.usesTmdb && (
+            <Pressable onPress={() => Linking.openURL("https://www.themoviedb.org")} accessibilityRole="link" style={styles.tmdb}>
+              <Text variant="tiny" weight="extrabold" color="#01B4E4" style={{ letterSpacing: 1 }}>TMDB</Text>
+              <Text variant="small" color={colors.muted} style={{ flex: 1 }}>{t("about.tmdb")}</Text>
+            </Pressable>
+          )}
+          <Text variant="small" color={colors.dim}>{catalog.usesTmdb ? t("about.disclaimerTmdb") : t("about.disclaimer")}</Text>
           <Text variant="small" color={colors.dim}>{t("about.builtWith")}</Text>
         </View>
       </ScrollView>
@@ -68,4 +75,14 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   credit: { gap: 8, padding: 16, borderRadius: radius.lg, backgroundColor: colors.selSoft },
+  tmdb: {
+    flexDirection: "row",
+    gap: 12,
+    alignItems: "center",
+    padding: 14,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.line,
+    marginBottom: 6,
+  },
 });

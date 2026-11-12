@@ -1,8 +1,23 @@
-// Demo catalogue. Cities are real, cinemas and films are fictional.
+// Demo catalogue. Cities are real, cinemas are fictional. The films below are
+// only used when no TMDB token is configured (see common/api/tmdb).
 import type { City } from "@api-hooks/cities/model";
 import type { Cinema } from "@api-hooks/cinemas/model";
-import type { Film } from "@api-hooks/films/model";
-import type { Promo } from "@api-hooks/promos/model";
+import type { AgeRating, FilmStatus, Genre } from "@api-hooks/films/model";
+import type { Localized } from "@common/api/model";
+
+export interface MockFilm {
+  id: string;
+  title: string;
+  status: FilmStatus;
+  releaseDate?: string;
+  genres: Genre[];
+  duration: number;
+  rating: AgeRating;
+  director: string;
+  cast: string[];
+  synopsis: Localized;
+  score: number | null;
+}
 
 export const CITIES: City[] = [
   { id: "jakarta", name: "Jakarta", province: "DKI Jakarta", lat: -6.2088, lng: 106.8456 },
@@ -37,7 +52,7 @@ export const CINEMAS: Cinema[] = [
   { id: "kuta", cityId: "denpasar", name: "Nontonin Kuta", address: "Jl. Kartika Plaza No. 5", lat: -8.718, lng: 115.17, tier: "premiere", studios: 4 },
 ];
 
-export const FILMS: Film[] = [
+export const MOCK_FILMS: MockFilm[] = [
   {
     id: "lautan-pasir",
     title: "Lautan Pasir",
@@ -129,30 +144,6 @@ export const FILMS: Film[] = [
       en: "Two strangers meet at the same clock tower every dusk for a season, without ever asking each other's name.",
     },
     score: null,
-  },
-];
-
-export const PROMOS: Promo[] = [
-  {
-    id: "promo-3d-seat",
-    filmId: "lautan-pasir",
-    kind: "feature",
-    title: { id: "Lihat layar dari kursimu", en: "See the screen from your seat" },
-    subtitle: { id: "Pratinjau 3D sebelum kamu pesan", en: "3D preview before you book" },
-  },
-  {
-    id: "promo-weekday",
-    filmId: "gema-malam",
-    kind: "discount",
-    title: { id: "Senin–Kamis hemat 20%", en: "Mon–Thu, 20% off" },
-    subtitle: { id: "Untuk semua film di Nontonin Regular", en: "On every film at Nontonin Regular" },
-  },
-  {
-    id: "promo-premiere",
-    filmId: "orbit-terakhir",
-    kind: "premiere",
-    title: { id: "Orbit Terakhir · 10 Des", en: "Orbit Terakhir · Dec 10" },
-    subtitle: { id: "Pre-sale dibuka minggu depan", en: "Pre-sale opens next week" },
   },
 ];
 

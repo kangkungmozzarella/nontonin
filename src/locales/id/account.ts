@@ -33,6 +33,8 @@ const account = {
     credit: "Interaksi pratinjau kursi 3D di aplikasi ini terinspirasi dari konsep UI/UX \"{{concept}}\" karya {{designer}}.",
     openOriginal: "Lihat karya aslinya",
     disclaimer: "Semua bioskop, film, dan poster di aplikasi ini fiktif dan dibuat untuk demo.",
+    disclaimerTmdb: "Bioskop, jadwal tayang, dan pembayaran di aplikasi ini fiktif dan dibuat untuk demo.",
+    tmdb: "Data dan gambar film disediakan oleh TMDB. Produk ini menggunakan TMDB API tetapi tidak didukung atau disertifikasi oleh TMDB.",
     builtWith: "Dibuat dengan Expo, React Native, dan Three.js",
   },
 };

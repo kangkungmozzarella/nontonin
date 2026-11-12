@@ -5,10 +5,10 @@ import { addMinutes, format, isBefore, parse } from "date-fns";
 import type { Booking, CreateBookingInput } from "@api-hooks/bookings/model";
 import type { SeatMap } from "@api-hooks/seats/model";
 import type { Showtime } from "@api-hooks/showtimes/model";
-import type { FilmStatus } from "@api-hooks/films/model";
+import type { Film } from "@api-hooks/films/model";
 import { SEAT_CELLS, hashString, mulberry } from "@common/theater/layout";
 import { priceForShowtime, orderTotals } from "@helpers/pricing";
-import { CINEMAS, CITIES, FILMS, PROMOS } from "./data";
+import { CINEMAS, CITIES } from "./data";
 
 const LATENCY = 280;
 
@@ -106,13 +106,6 @@ export const mockServer = {
 
   getCinema: (id: string) => respond(() => must(CINEMAS.find((c) => c.id === id), "cinema")),
 
-  getFilms: (status?: FilmStatus) =>
-    respond(() => (status ? FILMS.filter((f) => f.status === status) : FILMS)),
-
-  getFilm: (id: string) => respond(() => must(FILMS.find((f) => f.id === id), "film")),
-
-  getPromos: () => respond(() => PROMOS),
-
   // Showtimes for one film across all cinemas in a city
   getFilmSchedule: (filmId: string, cityId: string, date: string) =>
     respond(() =>
@@ -121,10 +114,10 @@ export const mockServer = {
         .filter((x) => x.showtimes.length > 0),
     ),
 
-  // Showtimes for every film playing at one cinema
-  getCinemaSchedule: (cinemaId: string, date: string) =>
+  // Showtimes at one cinema for the given now-playing films (films come from the catalogue)
+  getCinemaSchedule: (cinemaId: string, date: string, films: Film[]) =>
     respond(() =>
-      FILMS.filter((f) => f.status === "now")
+      films
         .map((film) => ({ film, showtimes: showtimesFor(cinemaId, film.id, date) }))
         .filter((x) => x.showtimes.length > 0),
     ),
@@ -163,6 +156,10 @@ export const mockServer = {
         code,
         showtimeId: input.showtimeId,
         filmId: p.filmId,
+        filmTitle: input.film.title,
+        poster: input.film.poster,
+        backdrop: input.film.backdrop,
+        cinemaName: cinema.name,
         cinemaId: p.cinemaId,
         date: p.date,
         time: p.time,

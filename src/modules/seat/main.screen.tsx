@@ -8,7 +8,6 @@ import * as Haptics from "expo-haptics";
 import { ArrowsOutLineHorizontalIcon, CaretLeftIcon, CubeIcon, EyeIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
-import { FilmArt } from "@constants/assets";
 import { MAX_SEATS_PER_ORDER } from "@constants/app";
 import { SeatCell, seatById } from "@common/theater/layout";
 import { formatDate, formatIDR } from "@helpers/format";
@@ -246,7 +245,7 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
       <Animated.View style={[StyleSheet.absoluteFill, stageStyle]} pointerEvents={mode === "seat" ? "auto" : "none"}>
         <TheaterView
           controller={controller}
-          filmFrame={FilmArt[film.data.id].still}
+          filmFrame={film.data.screenFrame}
           taken={taken}
           mine={readOnly ? owned : selected}
           active={stageActive}
