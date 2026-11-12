@@ -28,21 +28,12 @@ const common = {
     romance: "Romansa",
   },
   onboarding: {
-    slides: [
-      {
-        title: "Semua bioskop di kotamu, dalam satu aplikasi",
-        desc: "Pilih kota, bandingkan jadwal bioskop terdekat, dan pesan tanpa antre.",
-      },
-      {
-        title: "Lihat layarnya sebelum kamu duduk",
-        desc: "Ketuk kursi mana pun dan rasakan pandangan ke layar dari posisi itu dalam 3D.",
-      },
-      {
-        title: "Tiket langsung di genggaman",
-        desc: "Tunjukkan kode QR di pintu studio, petugas tinggal memindainya.",
-      },
-    ],
-    skip: "Lewati",
+    title: "Lihat layarnya sebelum kamu duduk",
+    desc: "Ketuk kursi mana pun di denah, lalu lihat pandangan ke layar dari posisi itu dalam 3D sebelum membayar.",
+    points: {
+      cinemas: "Jadwal semua bioskop Nontonin di kotamu",
+      ticket: "Tiket berupa kode QR, petugas tinggal memindainya",
+    },
     start: "Mulai",
   },
   city: {

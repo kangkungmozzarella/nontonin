@@ -12,13 +12,19 @@ interface Props {
   onPressSeat: (s: SeatCell, at: { x: number; y: number }) => void;
 }
 
-const SIDE_PAD = 14, LABEL_W = 14;
+const SIDE_PAD = 14,
+  LABEL_W = 14;
 
-// Seat size follows the CSS clamp() from the web prototype
+// Seats never go below 26pt, above the 24pt WCAG 2.2 target minimum; on narrow
+// phones the map is wider than the screen and scrolls sideways instead of shrinking
+const MIN_SEAT = 26,
+  MAX_SEAT = 32;
+
 export function useSeatMetrics() {
   const { width } = useWindowDimensions();
-  const g = Math.max(3, Math.min(6, width * 0.009));
-  const s = Math.max(13, Math.min(26, (width - SIDE_PAD * 2 - LABEL_W * 2 - 18 * g) / 15.7));
+  const g = Math.max(4, Math.min(6, width * 0.01));
+  const fit = (width - SIDE_PAD * 2 - LABEL_W * 2 - 18 * g) / 15.7;
+  const s = Math.max(MIN_SEAT, Math.min(MAX_SEAT, fit));
   return { s, g };
 }
 
@@ -40,6 +46,7 @@ export default function SeatMap({ taken, selected, previewing, onPressSeat }: Pr
                 <SeatButton
                   cell={c}
                   size={s}
+                  slop={g / 2}
                   taken={taken.has(c.id)}
                   selected={selected.has(c.id) || previewing === c.id}
                   onPress={onPressSeat}
@@ -67,6 +74,7 @@ function RowLabel({ label }: { label: string }) {
 const SeatButton = React.memo(function SeatButton({
   cell,
   size,
+  slop,
   taken,
   selected,
   onPress,
@@ -74,6 +82,7 @@ const SeatButton = React.memo(function SeatButton({
 }: {
   cell: SeatCell;
   size: number;
+  slop: number;
   taken: boolean;
   selected: boolean;
   onPress: Props["onPressSeat"];
@@ -93,7 +102,7 @@ const SeatButton = React.memo(function SeatButton({
     <Pressable
       onPress={handle}
       disabled={taken}
-      hitSlop={2}
+      hitSlop={slop}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled: taken, selected }}

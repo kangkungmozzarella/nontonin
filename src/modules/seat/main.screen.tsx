@@ -41,6 +41,7 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
   const toast = useToast();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
+  const mapScroll = React.useRef<React.ComponentRef<typeof ScrollView>>(null);
   const { bookings } = useBookings();
 
   const showtime = useGetShowtime(showtimeId);
@@ -275,25 +276,47 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
                   hitSlop={6}
                 >
                   <PerspectiveIcon size={16} color={preview3d ? colors.onAccent : colors.muted} weight={preview3d ? "fill" : "regular"} />
-                  <Text variant="tiny" weight="bold" color={preview3d ? colors.onAccent : colors.muted}>3D</Text>
+                  <Text variant="tiny" weight="bold" color={preview3d ? colors.onAccent : colors.muted}>
+                    3D
+                  </Text>
                 </Pressable>
               )
             }
           />
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 150 + insets.bottom }}>
-          <ScreenArc label={t("seat.screen")} />
-          <SeatMap taken={taken} selected={mine} previewing={mode === "seat" ? current?.id : null} onPressSeat={openSeat} />
+          {/* Wider than the screen on narrow phones: scroll sideways, opening centred */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ref={mapScroll}
+            onContentSizeChange={(w) => mapScroll.current?.scrollTo({ x: Math.max(0, (w - width) / 2), animated: false })}
+            style={{ marginHorizontal: -14 }}
+            contentContainerStyle={{ paddingHorizontal: 14, minWidth: width }}
+          >
+            <View style={{ flexGrow: 1 }}>
+              <ScreenArc label={t("seat.screen")} />
+              <SeatMap taken={taken} selected={mine} previewing={mode === "seat" ? current?.id : null} onPressSeat={openSeat} />
+            </View>
+          </ScrollView>
           <View style={styles.legend}>
-            <Legend label={t("seat.legend.available")} style={{ backgroundColor: colors.seatFill, borderWidth: 1.5, borderColor: colors.seatLine }} />
+            <Legend
+              label={t("seat.legend.available")}
+              style={{ backgroundColor: colors.seatFill, borderWidth: 1.5, borderColor: colors.seatLine }}
+            />
             <Legend label={t("seat.legend.taken")} style={{ backgroundColor: colors.takenFill }} taken />
-            <Legend label={t("seat.legend.recliner")} style={{ backgroundColor: colors.reclFill, borderWidth: 1.5, borderColor: colors.recl }} />
+            <Legend
+              label={t("seat.legend.recliner")}
+              style={{ backgroundColor: colors.reclFill, borderWidth: 1.5, borderColor: colors.recl }}
+            />
             <Legend label={t("seat.legend.selected")} style={{ backgroundColor: colors.accent }} />
           </View>
           {preview3d && (
             <View style={styles.hint}>
               <EyeIcon size={20} color={colors.text} />
-              <Text variant="small" color="#C9C7CF" style={{ flex: 1 }}>{t("seat.hint")}</Text>
+              <Text variant="small" color="#C9C7CF" style={{ flex: 1 }}>
+                {t("seat.hint")}
+              </Text>
             </View>
           )}
         </ScrollView>
@@ -325,13 +348,17 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
           <Animated.View entering={FadeIn.delay(700)}>
             <PressableScale onPress={backToMap} style={styles.chip} accessibilityRole="button">
               <CaretLeftIcon size={16} color={colors.text} weight="bold" />
-              <Text variant="small" weight="semibold">{readOnly ? t("common:back") : t("seat.backToMap")}</Text>
+              <Text variant="small" weight="semibold">
+                {readOnly ? t("common:back") : t("seat.backToMap")}
+              </Text>
             </PressableScale>
           </Animated.View>
           {lookHint && (
             <Animated.View entering={FadeIn} exiting={FadeOut} style={[styles.chip, { marginLeft: "auto" }]} pointerEvents="none">
               <ArrowsOutLineHorizontalIcon size={16} color={colors.text} />
-              <Text variant="small" weight="medium">{t("seat.drag")}</Text>
+              <Text variant="small" weight="medium">
+                {t("seat.drag")}
+              </Text>
             </Animated.View>
           )}
         </View>
@@ -360,7 +387,9 @@ function Legend({ label, style, taken }: { label: string; style: object; taken?:
       <View style={[{ width: 16, height: 13, borderRadius: 4, alignItems: "center", justifyContent: "center" }, style]}>
         {taken && <TakenMark size={16} />}
       </View>
-      <Text variant="tiny" color={colors.muted}>{label}</Text>
+      <Text variant="tiny" color={colors.muted}>
+        {label}
+      </Text>
     </View>
   );
 }

@@ -30,21 +30,12 @@ const common: typeof id = {
     romance: "Romance",
   },
   onboarding: {
-    slides: [
-      {
-        title: "Every cinema in your city, in one app",
-        desc: "Pick a city, compare showtimes at nearby cinemas and book without the queue.",
-      },
-      {
-        title: "See the screen before you sit down",
-        desc: "Tap any seat and get the view of the screen from that spot in 3D.",
-      },
-      {
-        title: "Your ticket, right in your hand",
-        desc: "Show the QR code at the studio door and staff scan it.",
-      },
-    ],
-    skip: "Skip",
+    title: "See the screen before you sit down",
+    desc: "Tap any seat on the map and get the view of the screen from that spot in 3D before you pay.",
+    points: {
+      cinemas: "Showtimes for every Nontonin cinema in your city",
+      ticket: "Your ticket is a QR code that staff scan at the door",
+    },
     start: "Get started",
   },
   city: {
