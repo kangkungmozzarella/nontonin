@@ -1,6 +1,6 @@
 # DESIGN.md · Nontonin
 
-Arahan visual untuk aplikasi mobile (`seat-view`) dan situs web (`seat-view-webapp`). Isinya diambil dari referensi yang diberikan pemilik produk (konsep aplikasi bioskop gelap dengan sidebar, hero key art, dan satu aksen merah) serta jawaban atas pertanyaan arah desain pada 12 Nov 2026. Salinan file ini ada di kedua repo dan harus tetap sama.
+Arahan visual untuk aplikasi mobile (repo `nontonin`) dan situs web (repo `nontonin-web`). Isinya diambil dari referensi yang diberikan pemilik produk (konsep aplikasi bioskop gelap dengan sidebar, hero key art, dan satu aksen merah) serta jawaban atas pertanyaan arah desain pada 12 Nov 2026. Salinan file ini ada di kedua repo dan harus tetap sama.
 
 ## Identitas
 
