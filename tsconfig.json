@@ -1,0 +1,55 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@components/*": [
+        "./src/common/components/*"
+      ],
+      "@api-hooks/*": [
+        "./src/api-hooks/*"
+      ],
+      "@helpers/*": [
+        "./src/common/helpers/*"
+      ],
+      "@constants/*": [
+        "./src/common/constants/*"
+      ],
+      "@assets/*": [
+        "./src/common/assets/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@navigators/*": [
+        "./src/navigators/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@locales/*": [
+        "./src/locales/*"
+      ],
+      "@app-types/*": [
+        "./src/types/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "index.ts",
+    "app.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "legacy-web",
+    "scripts"
+  ]
+}

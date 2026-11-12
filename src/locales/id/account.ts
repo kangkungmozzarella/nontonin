@@ -1,0 +1,40 @@
+const account = {
+  tickets: {
+    title: "Tiket saya",
+    upcoming: "Akan datang",
+    past: "Riwayat",
+    empty: "Belum ada tiket",
+    emptyDesc: "Tiket yang kamu beli akan muncul di sini.",
+    browse: "Cari film",
+    showQr: "Tunjukkan kode ini di pintu studio",
+    code: "Kode pemesanan",
+    previewSeat: "Lihat pandangan dari kursiku",
+    paidWith: "Dibayar dengan {{method}}",
+    total: "Total",
+    date: "Tanggal",
+    time: "Jam",
+  },
+  profile: {
+    guest: "Tamu",
+    guestDesc: "Tiketmu tersimpan di perangkat ini",
+    stats: "{{count}} tiket dibeli",
+    language: "Bahasa",
+    city: "Kota",
+    about: "Tentang Nontonin",
+    replayOnboarding: "Lihat pengenalan aplikasi lagi",
+    clearData: "Hapus semua data demo",
+    clearConfirm: "Semua tiket dan pengaturan akan dihapus dari perangkat ini.",
+    version: "Versi {{v}}",
+  },
+  about: {
+    title: "Tentang",
+    desc: "Nontonin adalah aplikasi pemesanan tiket bioskop dengan pratinjau kursi 3D. Sebelum membeli, kamu bisa melihat seperti apa layar dari kursi yang kamu pilih.",
+    creditTitle: "Inspirasi desain",
+    credit: "Interaksi pratinjau kursi 3D di aplikasi ini terinspirasi dari konsep UI/UX \"{{concept}}\" karya {{designer}}.",
+    openOriginal: "Lihat karya aslinya",
+    disclaimer: "Semua bioskop, film, dan poster di aplikasi ini fiktif dan dibuat untuk demo.",
+    builtWith: "Dibuat dengan Expo, React Native, dan Three.js",
+  },
+};
+
+export default account;

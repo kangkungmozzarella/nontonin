@@ -1,0 +1,73 @@
+const common = {
+  back: "Kembali",
+  next: "Lanjut",
+  cancel: "Batal",
+  close: "Tutup",
+  retry: "Coba lagi",
+  seeAll: "Lihat semua",
+  change: "Ganti",
+  done: "Selesai",
+  errorTitle: "Gagal memuat data",
+  errorDesc: "Periksa koneksimu lalu coba lagi.",
+  today: "Hari ini",
+  tomorrow: "Besok",
+  studio: "Studio {{n}}",
+  studios_one: "{{count}} studio",
+  studios_other: "{{count}} studio",
+  tabs: { home: "Beranda", cinemas: "Bioskop", tickets: "Tiket", profile: "Profil" },
+  tier: { premiere: "Premiere", regular: "Reguler" },
+  rating: { SU: "Semua umur", "13+": "13 tahun ke atas", "17+": "17 tahun ke atas" },
+  genre: {
+    adventure: "Petualangan",
+    drama: "Drama",
+    thriller: "Thriller",
+    crime: "Kriminal",
+    family: "Keluarga",
+    horror: "Horor",
+    "sci-fi": "Fiksi ilmiah",
+    romance: "Romansa",
+  },
+  onboarding: {
+    slides: [
+      {
+        title: "Semua bioskop di kotamu, dalam satu aplikasi",
+        desc: "Pilih kota, bandingkan jadwal bioskop terdekat, dan pesan tanpa antre.",
+      },
+      {
+        title: "Lihat layarnya sebelum kamu duduk",
+        desc: "Ketuk kursi mana pun dan rasakan pandangan ke layar dari posisi itu dalam 3D.",
+      },
+      {
+        title: "Tiket langsung di genggaman",
+        desc: "Tunjukkan kode QR di pintu studio. Tanpa cetak, tanpa ribet.",
+      },
+    ],
+    skip: "Lewati",
+    start: "Mulai",
+  },
+  city: {
+    title: "Pilih kota",
+    search: "Cari kota",
+    useLocation: "Gunakan lokasiku",
+    detecting: "Mendeteksi lokasi…",
+    cinemas_one: "{{count}} bioskop",
+    cinemas_other: "{{count}} bioskop",
+    nearest: "Terdekat",
+    noResult: "Kota tidak ditemukan",
+  },
+  location: {
+    title: "Temukan bioskop terdekat",
+    desc: "Izinkan Nontonin memakai lokasimu untuk memilih kota dan mengurutkan bioskop berdasarkan jarak.",
+    allow: "Izinkan lokasi",
+    manual: "Pilih kota sendiri",
+    denied: "Izin lokasi ditolak. Pilih kota secara manual.",
+    detected: "Lokasi terdeteksi: {{city}}",
+    failed: "Lokasi tidak bisa dibaca. Pilih kota secara manual.",
+  },
+  promo: {
+    dismissToday: "Jangan tampilkan lagi hari ini",
+    cta: { feature: "Coba sekarang", discount: "Lihat film", premiere: "Lihat detail" },
+  },
+};
+
+export default common;
