@@ -1,5 +1,6 @@
 import React from "react";
-import { FlatList, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { useAppDimensions } from "@hooks/use-app-dimensions";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import colors from "@constants/styles/color";
@@ -15,7 +16,7 @@ const ART = [PosterFan, ScreenOverSeats, TicketCard];
 
 export default function OnboardingScreen({ navigation }: RootScreenProps<"Onboarding">) {
   const { t } = useTranslation();
-  const { width } = useWindowDimensions();
+  const { width } = useAppDimensions();
   const slides = t("onboarding.slides", { returnObjects: true }) as { title: string; desc: string }[];
   const list = React.useRef<FlatList>(null);
   const [index, setIndex] = React.useState(0);

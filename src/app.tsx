@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform, StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
@@ -17,6 +18,7 @@ import { CityProvider } from "@hooks/use-city";
 import { LocationProvider } from "@hooks/use-user-location";
 import { BookingsProvider } from "@hooks/use-bookings";
 import { AppReadyContext } from "@hooks/use-app-ready";
+import { WEB_MAX_WIDTH } from "@hooks/use-app-dimensions";
 import { initI18n } from "@locales/index";
 import RootNavigator from "@navigators/root.navigator";
 import { linking } from "@navigators/linking";
@@ -56,10 +58,12 @@ export default function App() {
                 <BookingsProvider>
                   <ToastProvider>
                     <AppReadyContext.Provider value={splashDone}>
-                      <NavigationContainer theme={theme} linking={linking}>
-                        <StatusBar style="light" />
-                        <RootNavigator />
-                      </NavigationContainer>
+                      <WebShell>
+                        <NavigationContainer theme={theme} linking={linking}>
+                          <StatusBar style="light" />
+                          <RootNavigator />
+                        </NavigationContainer>
+                      </WebShell>
                     </AppReadyContext.Provider>
                   </ToastProvider>
                 </BookingsProvider>
@@ -72,3 +76,28 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
+
+// On the web the app is shown as a centred phone-width column, so wide
+// desktop screens get the same layout as phones instead of a stretched one
+function WebShell({ children }: { children: React.ReactNode }) {
+  if (Platform.OS !== "web") return children;
+  return (
+    <View style={styles.webOuter}>
+      <View style={styles.webColumn}>{children}</View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  webOuter: { flex: 1, alignItems: "center", backgroundColor: "#050407" },
+  webColumn: {
+    flex: 1,
+    width: "100%",
+    maxWidth: WEB_MAX_WIDTH,
+    overflow: "hidden",
+    backgroundColor: colors.bg,
+    borderLeftWidth: StyleSheet.hairlineWidth,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.line,
+  },
+});

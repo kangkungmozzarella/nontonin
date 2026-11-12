@@ -1,5 +1,6 @@
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { useAppDimensions } from "@hooks/use-app-dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
@@ -26,7 +27,7 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
   const { t } = useTranslation(["booking", "common"]);
   const lang = useLang();
   const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
+  const { width } = useAppDimensions();
   const { city } = useCity();
   const film = useGetFilm(filmId);
   const [date, setDate] = React.useState(() => upcomingDays()[0]);
