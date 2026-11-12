@@ -1,7 +1,7 @@
 import type { PerspectiveCamera } from "three";
 import { SCREEN, SeatCell, eyeOf } from "@common/theater/layout";
 
-// Camera math ported from legacy-web/src/theater.js. Lives outside React so
+// Camera math ported from the original web prototype. Lives outside React so
 // the render loop can read and write it every frame without re-rendering.
 
 export interface Pose {

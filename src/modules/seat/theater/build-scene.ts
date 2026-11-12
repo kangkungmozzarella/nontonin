@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { ROWS, SCREEN, SEAT_CELLS, SeatCell, rowFloor, rowZ, seatX, AISLE_AFTER, hashString, mulberry } from "@common/theater/layout";
 
-// Imperative scene construction ported from legacy-web/src/theater.js.
+// Imperative scene construction ported from the original web prototype.
 // Returns the root group plus hooks to recolor seats and swap the film frame.
 
 const SEAT_COLOR = {

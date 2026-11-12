@@ -1,4 +1,4 @@
-// Palette carried over from the web prototype (legacy-web/src/style.css)
+// Palette carried over from the original web prototype
 const colors = {
   bg: "#0B0A0E",
   panel: "#141417",

@@ -28,6 +28,11 @@ yarn-error.*
 
 # editor / AI tooling settings
 .claude/
+AGENTS.md
+CLAUDE.md
+
+# old web prototype, kept locally for reference
+legacy-web/
 .vscode/
 .idea/
 

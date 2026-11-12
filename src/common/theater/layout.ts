@@ -1,6 +1,6 @@
 // Auditorium geometry shared by the 2D seat map, the mini map and the 3D scene.
 // All distances are in meters. The screen sits on the plane z = 0 and the
-// audience faces -z. Ported from legacy-web/src/data.js.
+// audience faces -z. Ported from the original web prototype.
 
 export const ROWS = "ABCDEFGHI".split("");
 export const PER = 14; // seats per row

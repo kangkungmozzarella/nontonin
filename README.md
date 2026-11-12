@@ -47,9 +47,8 @@ Film sedang tayang dan segera tayang (judul, poster, backdrop, sinopsis, genre, 
 
 ```
 app.config.ts           konfigurasi Expo (ikon, splash, izin lokasi)
-metro.config.js         memaksa satu build ESM three.js (lihat AGENTS.md)
+metro.config.js         memaksa satu build ESM three.js agar R3F tidak crash di React Native
 scripts/                generator aset (ikon, splash, art film)
-legacy-web/             prototipe web Vite yang lama, sebagai referensi
 src/
   app.tsx               provider, font, splash animasi
   navigators/           stack, tab, deep link
