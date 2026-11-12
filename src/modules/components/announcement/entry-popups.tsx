@@ -1,6 +1,5 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
-import { useAppDimensions } from "@hooks/use-app-dimensions";
+import { Image, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { NavigationArrowIcon, XIcon } from "phosphor-react-native";
@@ -110,7 +109,7 @@ function PromoPopup({
 }) {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { width } = useAppDimensions();
+  const { width } = useWindowDimensions();
   const artW = Math.min(width - 48, 380); // matches the Popup card width
   return (
     <Popup visible={visible} onRequestClose={() => onClose(false)}>

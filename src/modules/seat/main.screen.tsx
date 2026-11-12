@@ -1,6 +1,5 @@
 import React from "react";
-import { BackHandler, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { useAppDimensions } from "@hooks/use-app-dimensions";
+import { BackHandler, Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from "react-native";
 import Animated, { Easing, FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -41,7 +40,7 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
   const lang = useLang();
   const toast = useToast();
   const insets = useSafeAreaInsets();
-  const { width, height } = useAppDimensions();
+  const { width, height } = useWindowDimensions();
   const { bookings } = useBookings();
 
   const showtime = useGetShowtime(showtimeId);

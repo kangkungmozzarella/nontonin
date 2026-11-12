@@ -1,6 +1,5 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
-import { useAppDimensions } from "@hooks/use-app-dimensions";
+import { FlatList, Image, StyleSheet, useWindowDimensions, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import colors from "@constants/styles/color";
@@ -15,7 +14,7 @@ const AUTO_MS = 4500;
 const KIND_COLOR = { feature: colors.sel, discount: colors.warm, premiere: colors.violet };
 
 export default function BannerCarousel() {
-  const { width } = useAppDimensions();
+  const { width } = useWindowDimensions();
   const itemW = width - GUTTER * 2;
   const itemH = Math.round(itemW / 2.1);
   const { data } = useGetPromos();

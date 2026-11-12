@@ -1,6 +1,5 @@
 import React from "react";
-import { GestureResponderEvent, Pressable, StyleSheet, View } from "react-native";
-import { useAppDimensions } from "@hooks/use-app-dimensions";
+import { GestureResponderEvent, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import colors from "@constants/styles/color";
 import { ROWS, PER, RECL_FROM, SEAT_CELLS, SeatCell, isAisleAfter } from "@common/theater/layout";
@@ -17,7 +16,7 @@ const SIDE_PAD = 14, LABEL_W = 14;
 
 // Seat size follows the CSS clamp() from the web prototype
 export function useSeatMetrics() {
-  const { width } = useAppDimensions();
+  const { width } = useWindowDimensions();
   const g = Math.max(3, Math.min(6, width * 0.009));
   const s = Math.max(13, Math.min(26, (width - SIDE_PAD * 2 - LABEL_W * 2 - 18 * g) / 15.7));
   return { s, g };
@@ -89,9 +88,7 @@ const SeatButton = React.memo(function SeatButton({
     borderBottomLeftRadius: size * 0.16,
     borderBottomRightRadius: size * 0.16,
   };
-  const { left } = useAppDimensions();
-  // pageX is relative to the window; on wide web screens the app column is offset by `left`
-  const handle = (e: GestureResponderEvent) => onPress(cell, { x: e.nativeEvent.pageX - left, y: e.nativeEvent.pageY });
+  const handle = (e: GestureResponderEvent) => onPress(cell, { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY });
   return (
     <Pressable
       onPress={handle}

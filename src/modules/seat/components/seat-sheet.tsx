@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated, { Easing, Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { GestureDetector, usePanGesture, useTapGesture } from "react-native-gesture-handler";
+import { GestureDetector, usePanGesture } from "react-native-gesture-handler";
 import { scheduleOnRN } from "react-native-worklets";
 import { CaretUpIcon } from "phosphor-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -87,7 +87,11 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
         "worklet";
         // a flick or a deliberate drag decides the direction; tiny moves snap to the nearest end
         const down =
-          Math.abs(e.velocityY) > 500 ? e.velocityY > 0 : Math.abs(e.translationY) > 24 ? e.translationY > 0 : drag.get() > max.get() / 2;
+          Math.abs(e.velocityY) > 500
+            ? e.velocityY > 0
+            : Math.abs(e.translationY) > 24
+              ? e.translationY > 0
+              : drag.get() > max.get() / 2;
         drag.set(withTiming(down ? max.get() : 0, SNAP));
         scheduleOnRN(setCollapsed, down);
       },
@@ -95,23 +99,6 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
     [drag, start, max],
   );
   const pan = usePanGesture(panConfig);
-
-  // The handle and the seat name toggle the sheet on tap. They use gesture-handler
-  // taps instead of Pressable: on the web a Pressable captures the pointer, so a
-  // drag that starts on it would never reach the pan above.
-  const toggle = React.useCallback(() => setCollapsed((c) => !c), []);
-  const tapConfig = React.useMemo(
-    () => ({
-      onActivate: () => {
-        "worklet";
-        scheduleOnRN(toggle);
-      },
-    }),
-    [toggle],
-  );
-  const handleTap = useTapGesture(tapConfig);
-  // the name only expands a folded sheet; on an open sheet tapping it does nothing
-  const nameTap = useTapGesture(React.useMemo(() => ({ ...tapConfig, enabled: collapsed }), [tapConfig, collapsed]));
 
   const anim = useAnimatedStyle(() => ({
     transform: [{ translateY: drag.get() + hide.get() * (sheetH || 420) }],
@@ -125,10 +112,8 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
   const desc =
     a.tag === "full" && seat.kind === "rec"
       ? t("seat.desc.fullRec")
-      : t(`seat.desc.${a.tag}`, {
-          tilt: Math.round(a.tilt),
-          off: Math.round(a.off),
-        });
+      : t(`seat.desc.${a.tag}`, { tilt: Math.round(a.tilt), off: Math.round(a.off) });
+  const toggle = () => setCollapsed((c) => !c);
 
   return (
     <GestureDetector gesture={pan}>
@@ -138,38 +123,33 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
         pointerEvents={visible ? "auto" : "none"}
         accessibilityLiveRegion="polite"
       >
-        <GestureDetector gesture={handleTap}>
-          <View
-            accessible
-            accessibilityRole="button"
-            accessibilityLabel={collapsed ? t("seat.sheetShow") : t("seat.sheetHide")}
-            accessibilityActions={[{ name: "activate" }]}
-            onAccessibilityAction={(e) => e.nativeEvent.actionName === "activate" && toggle()}
-            style={styles.handleHit}
-          >
-            <View style={styles.handle} />
-          </View>
-        </GestureDetector>
+        <Pressable
+          onPress={toggle}
+          hitSlop={{ top: 10, bottom: 6, left: 60, right: 60 }}
+          accessibilityRole="button"
+          accessibilityLabel={collapsed ? t("seat.sheetShow") : t("seat.sheetHide")}
+          style={styles.handleHit}
+        >
+          <View style={styles.handle} />
+        </Pressable>
         <View style={styles.top} onLayout={(e) => setHead((h) => ({ ...h, y: e.nativeEvent.layout.y }))}>
-          <GestureDetector gesture={nameTap}>
-            <View
-              style={{ flex: 1, gap: 3 }}
-              onLayout={(e) => {
-                const h = e.nativeEvent.layout.height;
-                setHead((p) => (p.h === h ? p : { ...p, h }));
-              }}
-            >
-              <Text variant="tiny" weight="bold" color={TAG_COLOR[a.tag]} style={{ letterSpacing: 1, textTransform: "uppercase" }}>
-                {t(`seat.tag.${a.tag}`)}
-              </Text>
-              <Text variant="h1" weight="bold">
-                {t("seat.name", { row: ROWS[seat.row], num: seat.num })}
-              </Text>
-              <Text variant="small" color={colors.muted}>
-                {t(`seat.kind.${seat.kind}`)} · {formatIDR(price)}
-              </Text>
-            </View>
-          </GestureDetector>
+          <Pressable
+            style={{ flex: 1, gap: 3 }}
+            onPress={collapsed ? toggle : undefined}
+            disabled={!collapsed}
+            onLayout={(e) => {
+              const h = e.nativeEvent.layout.height;
+              setHead((p) => (p.h === h ? p : { ...p, h }));
+            }}
+          >
+            <Text variant="tiny" weight="bold" color={TAG_COLOR[a.tag]} style={{ letterSpacing: 1, textTransform: "uppercase" }}>
+              {t(`seat.tag.${a.tag}`)}
+            </Text>
+            <Text variant="h1" weight="bold">{t("seat.name", { row: ROWS[seat.row], num: seat.num })}</Text>
+            <Text variant="small" color={colors.muted}>
+              {t(`seat.kind.${seat.kind}`)} · {formatIDR(price)}
+            </Text>
+          </Pressable>
           <Animated.View style={rest} pointerEvents={collapsed ? "none" : "auto"}>
             <MiniMap taken={taken} mine={mine} current={seat.id} onPick={readOnly ? undefined : onJump} />
           </Animated.View>
@@ -186,9 +166,7 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
         </View>
 
         <Animated.View style={rest} pointerEvents={collapsed ? "none" : "auto"}>
-          <Text variant="small" color="#C9C7CF" style={{ marginTop: 12 }}>
-            {desc}
-          </Text>
+          <Text variant="small" color="#C9C7CF" style={{ marginTop: 12 }}>{desc}</Text>
 
           <View style={styles.stats}>
             <Stat value={`${Math.round(a.fov)}°`} label={t("seat.stats.fov")} />
@@ -214,12 +192,8 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <View style={styles.stat}>
-      <Text weight="bold" variant="h3" numberOfLines={1} adjustsFontSizeToFit>
-        {value}
-      </Text>
-      <Text variant="tiny" color={colors.muted}>
-        {label}
-      </Text>
+      <Text weight="bold" variant="h3" numberOfLines={1} adjustsFontSizeToFit>{value}</Text>
+      <Text variant="tiny" color={colors.muted}>{label}</Text>
     </View>
   );
 }
@@ -238,13 +212,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.line,
   },
-  handleHit: {
-    alignSelf: "stretch",
-    alignItems: "center",
-    paddingTop: 6,
-    paddingBottom: 12,
-    marginTop: -6,
-  },
+  handleHit: { alignSelf: "stretch", alignItems: "center", paddingBottom: 12 },
   handle: { width: 38, height: 4, borderRadius: 2, backgroundColor: "#3A3A42" },
   expand: {
     width: 40,
@@ -258,12 +226,6 @@ const styles = StyleSheet.create({
   },
   top: { flexDirection: "row", gap: 14, alignItems: "flex-start" },
   stats: { flexDirection: "row", gap: 8, marginTop: 14 },
-  stat: {
-    flex: 1,
-    padding: 10,
-    borderRadius: radius.md,
-    backgroundColor: colors.panel2,
-    gap: 2,
-  },
+  stat: { flex: 1, padding: 10, borderRadius: radius.md, backgroundColor: colors.panel2, gap: 2 },
   actions: { flexDirection: "row", gap: 10, marginTop: 16 },
 });

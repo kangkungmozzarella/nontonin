@@ -1,6 +1,6 @@
 # Nontonin
 
-Aplikasi pemesanan tiket bioskop (Android, iOS, dan web) dengan **pratinjau kursi 3D**: ketuk kursi di denah, kamera terbang ke kursi itu, dan kamu melihat layar dari sudut pandang tersebut sebelum membeli.
+Aplikasi mobile pemesanan tiket bioskop dengan **pratinjau kursi 3D**: ketuk kursi di denah, kamera terbang ke kursi itu, dan kamu melihat layar dari sudut pandang tersebut sebelum membeli.
 
 Dibuat dengan Expo (SDK 58), React Native, React Navigation, react-query, dan Three.js (`@react-three/fiber/native` di atas `expo-gl`). Struktur folder mengikuti kurosim-mobile.
 
@@ -12,8 +12,6 @@ Interaksi pratinjau kursi 3D terinspirasi dari konsep UI/UX "Meridian" karya Ram
 cp .env.example .env.local   # lalu isi EXPO_PUBLIC_TMDB_TOKEN
 npm install
 npx expo start          # scan QR dengan Expo Go (SDK 58) di HP
-npm run web             # buka versi web di browser
-npm run build:web       # build web statis ke dist/
 npm run ts-check        # typecheck
 npm run lint
 npm run assets          # gambar ulang ikon, splash, poster, dan still film
@@ -31,12 +29,6 @@ Film sedang tayang dan segera tayang (judul, poster, backdrop, sinopsis, genre, 
 - Nilai `EXPO_PUBLIC_*` ikut masuk ke bundle aplikasi. Untuk rilis sungguhan, panggil TMDB lewat backend sendiri.
 - Bioskop, jadwal tayang, dan pembayaran tetap tiruan karena TMDB tidak menyediakan jadwal bioskop.
 - Sesuai ketentuan TMDB, halaman Tentang menampilkan atribusi TMDB.
-
-### Versi web
-
-Aplikasi yang sama berjalan di browser lewat react-native-web, termasuk pratinjau 3D (WebGL). Di layar lebar, aplikasi tampil sebagai kolom selebar HP di tengah layar (`WebShell` di `src/app.tsx`). Komponen yang butuh lebar layar memakai `useAppDimensions()` alih-alih `useWindowDimensions()`.
-
-`npm run build:web` menghasilkan situs statis di `dist/` yang bisa di-hosting di mana saja (EAS Hosting, Netlify, Vercel, GitHub Pages). Token TMDB dari `.env.local` ikut masuk ke bundle web dan bisa dilihat siapa pun yang membuka situsnya. Untuk situs publik, pakai token terpisah atau panggil TMDB lewat backend.
 
 > **Catatan iOS Simulator:** tampilan 3D di simulator iOS sering membeku di frame pertama dan kompilasi shader-nya sangat lambat. Ini keterbatasan GL di simulator. Untuk menguji 3D, pakai HP sungguhan atau emulator Android.
 
