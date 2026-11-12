@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { ROWS, SCREEN, SEAT_CELLS, SeatCell, rowFloor, rowZ, seatX, AISLE_AFTER } from "@common/theater/layout";
+import { ROWS, SCREEN, SEAT_CELLS, SeatCell, rowFloor, rowZ, seatX, AISLE_AFTER, hashString, mulberry } from "@common/theater/layout";
 
 // Imperative scene construction ported from legacy-web/src/theater.js.
 // Returns the root group plus hooks to recolor seats and swap the film frame.
@@ -149,6 +149,173 @@ function buildSeats(g: THREE.Group) {
   };
 }
 
+// ---- audience ---------------------------------------------------------------
+// Low-poly seated people in taken seats, so the view from a seat shows who sits
+// next to and in front of you. Each body part is one InstancedMesh covering every
+// seat; empty seats get a zero-scale matrix. Looks are seeded by seat id, so the
+// same seat always holds the same person.
+
+const SKIN = [0xe0b48f, 0xc99a74, 0xb07d57, 0x956545, 0x7a4e33, 0x5e3b27].map((c) => new THREE.Color(c));
+const HAIR = [0x0d0b0b, 0x16110f, 0x251a14, 0x3a2a1f, 0x1c1c1e, 0x5a4636].map((c) => new THREE.Color(c));
+const TOP = [0x2f3d5c, 0x55565c, 0x6e2a2d, 0x2d4a3a, 0xcfc8b8, 0x18181b, 0x8a6a3a, 0x4a6f8a, 0x8c8f96, 0x5a3e6b, 0xa4473a].map(
+  (c) => new THREE.Color(c),
+);
+const PANTS = [0x1d2333, 0x262629, 0x3a3226, 0x34405a, 0x4a4a4e].map((c) => new THREE.Color(c));
+const HIJAB = [0x2b2b33, 0x7b5f73, 0xa58f7b, 0x3d5566, 0x6b3a3a, 0xc9b8a4, 0x4a5a45].map((c) => new THREE.Color(c));
+const SHOE = new THREE.Color(0x141214);
+
+interface Person {
+  skin: THREE.Color;
+  hair: THREE.Color;
+  top: THREE.Color;
+  pants: THREE.Color;
+  hijab: THREE.Color | null;
+  longHair: boolean;
+  longSleeve: boolean;
+  scale: number;
+  yaw: number;
+  roll: number;
+}
+
+function personFor(s: SeatCell): Person {
+  const r = mulberry(hashString("aud" + s.id));
+  const pick = <T,>(a: T[]) => a[Math.floor(r() * a.length)];
+  const hijab = r() < 0.28 ? pick(HIJAB) : null;
+  return {
+    skin: pick(SKIN),
+    hair: pick(HAIR),
+    top: pick(TOP),
+    pants: pick(PANTS),
+    hijab,
+    longHair: !hijab && r() < 0.3,
+    longSleeve: !!hijab || r() < 0.4,
+    scale: 0.9 + r() * 0.16,
+    yaw: (r() - 0.5) * 0.22,
+    roll: (r() - 0.5) * 0.08,
+  };
+}
+
+type Part = {
+  geo: THREE.BufferGeometry;
+  skin?: boolean;
+  // local transform on the chair: [x, y, z], [rotX, rotZ], scale
+  at: [number, number, number];
+  rot?: [number, number];
+  scl?: [number, number, number];
+  color: (p: Person) => THREE.Color;
+  show?: (p: Person) => boolean;
+};
+
+function buildAudience(g: THREE.Group) {
+  const cloth = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+  const skin = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
+  const sleeve = (p: Person) => (p.longSleeve ? p.top : p.skin);
+  const headTop = (p: Person) => p.hijab ?? p.hair;
+
+  const parts: Part[] = [
+    // legs: thighs on the cushion, shins down to the floor, shoes
+    { geo: new RoundedBoxGeometry(0.38, 0.15, 0.46, 2, 0.06), at: [0, 0.6, -0.06], color: (p) => p.pants },
+    { geo: new RoundedBoxGeometry(0.32, 0.46, 0.13, 2, 0.05), at: [0, 0.33, -0.3], color: (p) => p.pants },
+    { geo: new RoundedBoxGeometry(0.34, 0.08, 0.22, 2, 0.03), at: [0, 0.05, -0.36], color: () => SHOE },
+    // torso leaning back into the backrest
+    {
+      geo: new THREE.CapsuleGeometry(0.16, 0.32, 4, 10),
+      at: [0, 0.95, 0.08],
+      rot: [0.12, 0],
+      scl: [1.22, 1, 0.72],
+      color: (p) => p.top,
+    },
+    // upper arms from the shoulders, forearms resting on the armrests
+    { geo: new THREE.CapsuleGeometry(0.052, 0.24, 3, 8), at: [-0.235, 0.96, 0.1], rot: [0, -0.14], color: (p) => p.top },
+    { geo: new THREE.CapsuleGeometry(0.052, 0.24, 3, 8), at: [0.235, 0.96, 0.1], rot: [0, 0.14], color: (p) => p.top },
+    { geo: new THREE.CapsuleGeometry(0.045, 0.26, 3, 8), at: [-0.27, 0.76, -0.06], rot: [Math.PI / 2, 0], color: sleeve },
+    { geo: new THREE.CapsuleGeometry(0.045, 0.26, 3, 8), at: [0.27, 0.76, -0.06], rot: [Math.PI / 2, 0], color: sleeve },
+    // neck and head
+    { geo: new THREE.CylinderGeometry(0.048, 0.055, 0.12, 10), skin: true, at: [0, 1.3, 0.12], color: (p) => p.skin },
+    { geo: new THREE.SphereGeometry(0.105, 16, 12), skin: true, at: [0, 1.41, 0.12], scl: [0.95, 1.15, 1.05], color: (p) => p.skin },
+    // hair cap (or hijab) tipped back so it covers the crown and the back of the head
+    {
+      geo: new THREE.SphereGeometry(0.114, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.6),
+      at: [0, 1.415, 0.13],
+      rot: [0.55, 0],
+      scl: [0.97, 1.15, 1.07],
+      color: headTop,
+    },
+    // long hair falling behind the shoulders
+    {
+      geo: new RoundedBoxGeometry(0.22, 0.3, 0.07, 2, 0.03),
+      at: [0, 1.25, 0.22],
+      rot: [0.12, 0],
+      color: (p) => p.hair,
+      show: (p) => p.longHair,
+    },
+    // hijab: cap around the face plus a drape over the shoulders
+    {
+      geo: new THREE.SphereGeometry(0.122, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.72),
+      at: [0, 1.41, 0.135],
+      rot: [0.9, 0],
+      scl: [0.98, 1.12, 1.05],
+      color: headTop,
+      show: (p) => !!p.hijab,
+    },
+    {
+      geo: new THREE.CylinderGeometry(0.1, 0.22, 0.26, 14),
+      at: [0, 1.22, 0.11],
+      rot: [0.1, 0],
+      scl: [1, 1, 0.82],
+      color: headTop,
+      show: (p) => !!p.hijab,
+    },
+  ];
+
+  const people = SEAT_CELLS.map(personFor);
+  const hidden = new THREE.Matrix4().makeScale(0, 0, 0);
+  const seatM = new THREE.Matrix4(), bodyM = new THREE.Matrix4(), tmp = new THREE.Matrix4();
+  const d = new THREE.Object3D();
+
+  const meshes = parts.map((p) => {
+    const m = new THREE.InstancedMesh(p.geo, p.skin ? skin : cloth, SEAT_CELLS.length);
+    d.position.set(...p.at);
+    d.rotation.set(p.rot?.[0] ?? 0, 0, p.rot?.[1] ?? 0);
+    d.scale.set(...(p.scl ?? [1, 1, 1]));
+    d.updateMatrix();
+    const local = d.matrix.clone();
+    SEAT_CELLS.forEach((_, i) => {
+      m.setMatrixAt(i, hidden);
+      m.setColorAt(i, p.color(people[i]));
+    });
+    // instances move in and out, so a cached bounding sphere would cull wrongly
+    m.frustumCulled = false;
+    m.visible = false;
+    g.add(m);
+    return { m, local, part: p };
+  });
+
+  // Pivot each body around the cushion so a smaller person still sits on it
+  const PIVOT = 0.53;
+  const body = SEAT_CELLS.map((s, i) => {
+    const p = people[i];
+    const rec = s.kind === "rec";
+    seatM.makeTranslation(seatX(s.col), rowFloor(s.row) + PIVOT + (rec ? 0.03 : 0), rowZ[s.row] + (rec ? 0.04 : 0));
+    bodyM.makeRotationFromEuler(new THREE.Euler(rec ? 0.08 : 0, p.yaw, p.roll));
+    tmp.makeScale(p.scale, p.scale, p.scale);
+    return seatM.clone().multiply(bodyM).multiply(tmp).multiply(new THREE.Matrix4().makeTranslation(0, -PIVOT, 0));
+  });
+
+  return function seat(occupied: ReadonlySet<string>) {
+    for (const { m, local, part } of meshes) {
+      let any = false;
+      SEAT_CELLS.forEach((s, i) => {
+        const on = occupied.has(s.id) && (part.show?.(people[i]) ?? true);
+        m.setMatrixAt(i, on ? tmp.multiplyMatrices(body[i], local) : hidden);
+        any ||= on;
+      });
+      m.instanceMatrix.needsUpdate = true;
+      m.visible = any;
+    }
+  };
+}
+
 function buildScreen(g: THREE.Group) {
   const mat = new THREE.MeshBasicMaterial({ color: 0x1a1816, toneMapped: false, fog: false });
   const scr = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN.w, SCREEN.h), mat);
@@ -161,8 +328,15 @@ export function buildTheater() {
   const group = new THREE.Group();
   buildLights(group);
   buildRoom(group);
-  const paintSeats = buildSeats(group);
+  const paintChairs = buildSeats(group);
+  const seatAudience = buildAudience(group);
   const screenMat = buildScreen(group);
+
+  function paintSeats(taken: ReadonlySet<string>, mine: ReadonlySet<string>) {
+    paintChairs(taken, mine);
+    // the viewer's own seats stay empty, everyone else who bought a ticket shows up
+    seatAudience(new Set([...taken].filter((id) => !mine.has(id))));
+  }
 
   let tex: THREE.Texture | null = null;
   let base = { x: 0.03, y: 0.03 };
