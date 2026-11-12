@@ -41,7 +41,7 @@ const common: typeof id = {
       },
       {
         title: "Your ticket, right in your hand",
-        desc: "Show the QR code at the studio door. No printing, no fuss.",
+        desc: "Show the QR code at the studio door and staff scan it.",
       },
     ],
     skip: "Skip",
@@ -68,7 +68,7 @@ const common: typeof id = {
   },
   promo: {
     dismissToday: "Don't show again today",
-    cta: { feature: "Try it now", discount: "See films", premiere: "See details" },
+    cta: { feature: "See showtimes", discount: "See films", premiere: "See details" },
   },
 };
 

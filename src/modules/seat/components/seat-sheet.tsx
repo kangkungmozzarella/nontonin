@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import colors from "@constants/styles/color";
 import { radius } from "@constants/styles/size";
 import { ROWS, SeatCell } from "@common/theater/layout";
-import { analyze, TAG_COLOR } from "@common/theater/analyze";
+import { analyze } from "@common/theater/analyze";
 import { formatIDR } from "@helpers/format";
 import Text from "@components/text";
 import Button from "@components/button";
@@ -142,7 +142,7 @@ export default function SeatSheet({ visible, seat, price, picked, readOnly, take
               setHead((p) => (p.h === h ? p : { ...p, h }));
             }}
           >
-            <Text variant="tiny" weight="bold" color={TAG_COLOR[a.tag]} style={{ letterSpacing: 1, textTransform: "uppercase" }}>
+            <Text variant="small" weight="semibold" color={colors.muted}>
               {t(`seat.tag.${a.tag}`)}
             </Text>
             <Text variant="h1" weight="bold">{t("seat.name", { row: ROWS[seat.row], num: seat.num })}</Text>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     paddingHorizontal: 18,
     paddingTop: 10,
-    backgroundColor: colors.glass,
+    backgroundColor: colors.scrim,
     borderTopLeftRadius: radius.xl,
     borderTopRightRadius: radius.xl,
     borderWidth: 1,

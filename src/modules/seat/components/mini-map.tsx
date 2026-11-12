@@ -61,8 +61,8 @@ export default function MiniMap({ taken, mine, current, onPick, width = 116 }: P
               width={0.48}
               height={0.4}
               rx={0.1}
-              fill={isCur ? colors.sel : isMine ? "rgba(124,242,180,0.55)" : isTaken ? colors.transparent : rec ? colors.recl : colors.seat}
-              stroke={isCur ? colors.sel : isTaken ? (rec ? colors.reclTaken : "#34343b") : "none"}
+              fill={isCur || isMine ? colors.accent : isTaken ? colors.takenFill : rec ? colors.reclFill : colors.seatFill}
+              stroke={isCur ? colors.text : isMine || isTaken ? "none" : rec ? colors.recl : colors.seatLine}
               strokeWidth={isCur ? 0.1 : 0.07}
             />
           );

@@ -66,7 +66,7 @@ export function TicketCard() {
           <View style={{ flex: 1, gap: 4 }}>
             <Text weight="bold" variant="h3">Arus Biru</Text>
             <Text variant="small" color={colors.muted}>Nontonin Braga · Studio 2</Text>
-            <Text variant="small" color={colors.sel} weight="semibold">19:30 · F7, F8</Text>
+            <Text variant="small" color={colors.text} weight="semibold">19:30 · F7, F8</Text>
           </View>
         </View>
         <View style={styles.perforation} />
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
   },
   still: { width: 290, height: 122 },
   seatRow: { flexDirection: "row", gap: 6, justifyContent: "center" },
-  seat: { borderRadius: 4, backgroundColor: colors.seat },
-  seatLit: { backgroundColor: colors.sel, shadowColor: colors.sel, shadowOpacity: 0.8, shadowRadius: 10 },
+  seat: { borderRadius: 4, borderWidth: 1.5, borderColor: colors.seatLine, backgroundColor: colors.seatFill },
+  seatLit: { backgroundColor: colors.accent, borderColor: colors.accent },
   ticket: { width: 270, borderRadius: 20, backgroundColor: colors.panel2, borderWidth: 1, borderColor: colors.line, overflow: "hidden" },
   ticketTop: { flexDirection: "row", gap: 12, padding: 16, alignItems: "center" },
   thumb: { width: 48, height: 72, borderRadius: 8 },

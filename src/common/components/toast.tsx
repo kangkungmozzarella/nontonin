@@ -46,7 +46,7 @@ export const useToast = () => React.useContext(ToastContext);
 const styles = StyleSheet.create({
   host: { position: "absolute", left: 16, right: 16, alignItems: "center" },
   toast: {
-    backgroundColor: colors.glass,
+    backgroundColor: colors.panel2,
     borderColor: colors.line,
     borderWidth: 1,
     borderRadius: radius.lg,

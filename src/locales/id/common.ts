@@ -39,7 +39,7 @@ const common = {
       },
       {
         title: "Tiket langsung di genggaman",
-        desc: "Tunjukkan kode QR di pintu studio. Tanpa cetak, tanpa ribet.",
+        desc: "Tunjukkan kode QR di pintu studio, petugas tinggal memindainya.",
       },
     ],
     skip: "Lewati",
@@ -66,7 +66,7 @@ const common = {
   },
   promo: {
     dismissToday: "Jangan tampilkan lagi hari ini",
-    cta: { feature: "Coba sekarang", discount: "Lihat film", premiere: "Lihat detail" },
+    cta: { feature: "Pilih jadwal", discount: "Lihat film", premiere: "Lihat detail" },
   },
 };
 

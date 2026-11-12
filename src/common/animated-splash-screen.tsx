@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
     width: 280,
     height: 280,
     borderRadius: 140,
-    backgroundColor: "rgba(124,242,180,0.10)",
+    backgroundColor: "rgba(200,16,46,0.10)",
   },
   nameWrap: { position: "absolute" },
-  name: { letterSpacing: 6, fontSize: 30 },
+  name: { letterSpacing: -0.5, fontSize: 30 },
 });

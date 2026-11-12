@@ -32,7 +32,7 @@ export default function TabNavigator() {
           headerShown: false,
           tabBarLabel: t(LABEL_KEY[route.name]),
           tabBarIcon: ({ color, focused }) => <I size={22} color={color} weight={focused ? "fill" : "regular"} />,
-          tabBarActiveTintColor: colors.sel,
+          tabBarActiveTintColor: colors.text,
           tabBarInactiveTintColor: colors.muted,
           tabBarLabelStyle: { fontFamily: fontFamily.medium, fontSize: 11 },
           tabBarStyle: styles.bar,

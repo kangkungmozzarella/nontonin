@@ -19,7 +19,7 @@ export default function StateView({ loading, error, onRetry, empty, compact }: P
   return (
     <View style={[styles.box, compact && styles.compact]}>
       {loading ? (
-        <ActivityIndicator color={colors.sel} />
+        <ActivityIndicator color={colors.muted} />
       ) : error ? (
         <>
           <Text variant="h3" weight="semibold" align="center">{t("errorTitle")}</Text>

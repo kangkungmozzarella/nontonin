@@ -51,14 +51,14 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={{ padding: GUTTER, gap: 22, paddingBottom: 40 }}>
         <View style={styles.user}>
           <View style={styles.avatar}>
-            <UserIcon size={26} color={colors.sel} weight="fill" />
+            <UserIcon size={26} color={colors.text} weight="fill" />
           </View>
           <View style={{ flex: 1, gap: 2 }}>
             <Text variant="h2" weight="bold">{t("profile.guest")}</Text>
             <Text variant="small" color={colors.muted}>{t("profile.guestDesc")}</Text>
           </View>
           <View style={styles.count}>
-            <Text weight="bold" color={colors.sel}>{bookings.length}</Text>
+            <Text weight="bold" color={colors.text}>{bookings.length}</Text>
           </View>
         </View>
 
@@ -77,7 +77,7 @@ export default function ProfileScreen() {
                 key={l.code}
                 label={l.label}
                 onPress={() => setLanguage(l.code)}
-                trailing={l.code === lang ? <CheckIcon size={18} color={colors.sel} weight="bold" /> : <View />}
+                trailing={l.code === lang ? <CheckIcon size={18} color={colors.text} weight="bold" /> : <View />}
               />
             ))}
           </Group>
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.line,
   },
-  avatar: { width: 52, height: 52, borderRadius: 26, backgroundColor: colors.selSoft, alignItems: "center", justifyContent: "center" },
-  count: { minWidth: 34, height: 34, borderRadius: 17, paddingHorizontal: 8, backgroundColor: colors.selSoft, alignItems: "center", justifyContent: "center" },
+  avatar: { width: 52, height: 52, borderRadius: 26, backgroundColor: colors.panel2, alignItems: "center", justifyContent: "center" },
+  count: { minWidth: 34, height: 34, borderRadius: 17, paddingHorizontal: 8, backgroundColor: colors.panel2, alignItems: "center", justifyContent: "center" },
   groupTitle: { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 4 },
   group: { borderRadius: radius.lg, backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.line, overflow: "hidden" },
   sep: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },

@@ -11,7 +11,7 @@ const booking: typeof id = {
     score: "Audience score",
   },
   seat: {
-    screen: "SCREEN",
+    screen: "Screen",
     legend: { available: "Available", taken: "Taken", recliner: "Recliner", selected: "Selected" },
     hint: "Tap any open seat to see the screen from that spot before you book.",
     preview3d: "3D preview",

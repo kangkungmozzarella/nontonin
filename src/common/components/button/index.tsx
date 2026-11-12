@@ -20,7 +20,7 @@ export interface ButtonProps {
 }
 
 const palette: Record<Variant, { bg: string; fg: string; border: string }> = {
-  primary: { bg: colors.sel, fg: colors.selInk, border: colors.sel },
+  primary: { bg: colors.accent, fg: colors.onAccent, border: colors.accent },
   secondary: { bg: colors.panel2, fg: colors.text, border: colors.line },
   ghost: { bg: colors.transparent, fg: colors.text, border: colors.line },
   danger: { bg: colors.transparent, fg: colors.danger, border: "rgba(255,143,143,0.35)" },
@@ -61,7 +61,7 @@ export default function Button({ label, onPress, variant = "primary", size = "md
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: radius.md,
+    borderRadius: radius.pill,
     borderWidth: 1,
     paddingHorizontal: 18,
     alignItems: "center",

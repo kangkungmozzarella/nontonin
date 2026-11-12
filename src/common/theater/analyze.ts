@@ -29,12 +29,3 @@ export function analyze(s: SeatCell): SeatAnalysis {
 
   return { fov, off, tilt, dist, tag };
 }
-
-export const TAG_COLOR: Record<SeatTag, string> = {
-  upClose: "#FFB86B",
-  side: "#FF8F8F",
-  immersive: "#9DB8FF",
-  sweet: "#7CF2B4",
-  great: "#7CF2B4",
-  full: "#D0B8FF",
-};

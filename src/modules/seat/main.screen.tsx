@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
-import { ArrowsOutLineHorizontalIcon, CaretLeftIcon, CubeIcon, EyeIcon } from "phosphor-react-native";
+import { ArrowsOutLineHorizontalIcon, CaretLeftIcon, PerspectiveIcon, EyeIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
 import { MAX_SEATS_PER_ORDER } from "@constants/app";
@@ -26,7 +26,7 @@ import StateView from "@components/state-view";
 import PressableScale from "@components/pressable-scale";
 import { useToast } from "@components/toast";
 import type { RootScreenProps } from "@app-types/navigation";
-import SeatMap from "./components/seat-map";
+import SeatMap, { TakenMark } from "./components/seat-map";
 import ScreenArc from "./components/screen-arc";
 import SeatSheet from "./components/seat-sheet";
 import TheaterView from "./theater/theater-view";
@@ -274,8 +274,8 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
                   style={[styles.toggle, preview3d && styles.toggleOn]}
                   hitSlop={6}
                 >
-                  <CubeIcon size={16} color={preview3d ? colors.selInk : colors.muted} weight={preview3d ? "fill" : "regular"} />
-                  <Text variant="tiny" weight="bold" color={preview3d ? colors.selInk : colors.muted}>3D</Text>
+                  <PerspectiveIcon size={16} color={preview3d ? colors.onAccent : colors.muted} weight={preview3d ? "fill" : "regular"} />
+                  <Text variant="tiny" weight="bold" color={preview3d ? colors.onAccent : colors.muted}>3D</Text>
                 </Pressable>
               )
             }
@@ -285,14 +285,14 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
           <ScreenArc label={t("seat.screen")} />
           <SeatMap taken={taken} selected={mine} previewing={mode === "seat" ? current?.id : null} onPressSeat={openSeat} />
           <View style={styles.legend}>
-            <Legend label={t("seat.legend.available")} style={{ backgroundColor: colors.seat }} />
-            <Legend label={t("seat.legend.taken")} style={{ borderWidth: 1.5, borderColor: "#3a3a42" }} />
-            <Legend label={t("seat.legend.recliner")} style={{ backgroundColor: colors.recl }} />
-            <Legend label={t("seat.legend.selected")} style={{ backgroundColor: colors.sel }} />
+            <Legend label={t("seat.legend.available")} style={{ backgroundColor: colors.seatFill, borderWidth: 1.5, borderColor: colors.seatLine }} />
+            <Legend label={t("seat.legend.taken")} style={{ backgroundColor: colors.takenFill }} taken />
+            <Legend label={t("seat.legend.recliner")} style={{ backgroundColor: colors.reclFill, borderWidth: 1.5, borderColor: colors.recl }} />
+            <Legend label={t("seat.legend.selected")} style={{ backgroundColor: colors.accent }} />
           </View>
           {preview3d && (
             <View style={styles.hint}>
-              <EyeIcon size={20} color={colors.sel} />
+              <EyeIcon size={20} color={colors.text} />
               <Text variant="small" color="#C9C7CF" style={{ flex: 1 }}>{t("seat.hint")}</Text>
             </View>
           )}
@@ -354,10 +354,12 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
   );
 }
 
-function Legend({ label, style }: { label: string; style: object }) {
+function Legend({ label, style, taken }: { label: string; style: object; taken?: boolean }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-      <View style={[{ width: 11, height: 9, borderRadius: 3 }, style]} />
+      <View style={[{ width: 16, height: 13, borderRadius: 4, alignItems: "center", justifyContent: "center" }, style]}>
+        {taken && <TakenMark size={16} />}
+      </View>
       <Text variant="tiny" color={colors.muted}>{label}</Text>
     </View>
   );
@@ -377,7 +379,7 @@ const styles = StyleSheet.create({
     borderColor: colors.line,
     backgroundColor: colors.panel,
   },
-  toggleOn: { backgroundColor: colors.sel, borderColor: colors.sel },
+  toggleOn: { backgroundColor: colors.accent, borderColor: colors.accent },
   legend: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 16, rowGap: 8, marginTop: 26 },
   hint: {
     flexDirection: "row",
@@ -400,7 +402,7 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingLeft: 16,
     borderRadius: 18,
-    backgroundColor: colors.glass,
+    backgroundColor: colors.scrim,
     borderWidth: 1,
     borderColor: colors.line,
   },

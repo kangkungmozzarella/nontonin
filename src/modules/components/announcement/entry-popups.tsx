@@ -85,7 +85,7 @@ function LocationPopup({ visible }: { visible: boolean }) {
     <Popup visible={visible} onRequestClose={() => {}} dismissOnBackdrop={false}>
       <View style={styles.locBody}>
         <View style={styles.locIcon}>
-          <NavigationArrowIcon size={28} color={colors.sel} weight="fill" />
+          <NavigationArrowIcon size={28} color={colors.text} weight="fill" />
         </View>
         <Text variant="h2" weight="bold" align="center">{t("location.title")}</Text>
         <Text color={colors.muted} align="center">{t("location.desc")}</Text>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 20,
-    backgroundColor: colors.selSoft,
+    backgroundColor: colors.panel2,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 6,

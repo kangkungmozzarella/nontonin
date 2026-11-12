@@ -28,9 +28,9 @@ export default function DateStrip({ value, onChange }: { value: string; onChange
         return (
           <Chip key={d} active={active} onPress={() => onChange(d)} style={{ minWidth: 64, paddingVertical: 8 }} label={formatDate(d, "EEEE d MMMM", lang)}>
             <View style={{ alignItems: "center" }}>
-              <Text variant="tiny" weight="medium" color={active ? colors.selInk : colors.muted}>{top}</Text>
-              <Text variant="h3" weight="bold" color={active ? colors.selInk : colors.text}>{formatDate(d, "d", lang)}</Text>
-              <Text variant="tiny" color={active ? colors.selInk : colors.muted}>{formatDate(d, "MMM", lang)}</Text>
+              <Text variant="tiny" weight="medium" color={active ? colors.onAccent : colors.muted}>{top}</Text>
+              <Text variant="h3" weight="bold" color={active ? colors.onAccent : colors.text}>{formatDate(d, "d", lang)}</Text>
+              <Text variant="tiny" color={active ? colors.onAccent : colors.muted}>{formatDate(d, "MMM", lang)}</Text>
             </View>
           </Chip>
         );

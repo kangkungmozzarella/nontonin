@@ -11,7 +11,7 @@ import PressableScale from "@components/pressable-scale";
 
 const GAP = 10;
 const AUTO_MS = 4500;
-const KIND_COLOR = { feature: colors.sel, discount: colors.warm, premiere: colors.violet };
+const KIND_COLOR = { feature: colors.text, discount: colors.text, premiere: colors.text };
 
 export default function BannerCarousel() {
   const { width } = useWindowDimensions();
@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
   copy: { position: "absolute", left: 16, right: 16, bottom: 14, gap: 3 },
   kind: { width: 22, height: 3, borderRadius: 2, marginBottom: 6 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 5, marginTop: 10 },
-  dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: colors.seat },
+  dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: colors.lineStrong },
   dotOn: { width: 16, backgroundColor: colors.text },
 });

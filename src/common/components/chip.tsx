@@ -32,7 +32,7 @@ export default function Chip({ active, disabled, onPress, children, style, label
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
     borderWidth: 1,
     borderColor: colors.line,
     backgroundColor: colors.panel,
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  active: { backgroundColor: colors.sel, borderColor: colors.sel },
+  active: { backgroundColor: colors.accent, borderColor: colors.accent },
   disabled: { opacity: 0.35 },
 });

@@ -22,14 +22,14 @@ export default function CinemaCard({ cinema, distanceKm }: { cinema: Cinema; dis
       scaleTo={0.98}
     >
       <View style={styles.icon}>
-        <MapPinIcon size={20} color={premiere ? colors.warm : colors.sel} weight="fill" />
+        <MapPinIcon size={20} color={colors.muted} weight="fill" />
       </View>
       <View style={{ flex: 1, gap: 3 }}>
         <View style={styles.titleRow}>
           <Text weight="semibold" numberOfLines={1} style={{ flexShrink: 1 }}>{cinema.name}</Text>
           {premiere && (
             <View style={styles.tier}>
-              <Text variant="tiny" weight="bold" color={colors.warm}>{t("tier.premiere")}</Text>
+              <Text variant="tiny" weight="bold" color={colors.text}>{t("tier.premiere")}</Text>
             </View>
           )}
         </View>

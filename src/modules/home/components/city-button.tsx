@@ -20,7 +20,7 @@ export default function CityButton() {
       onPress={() => navigation.navigate("CityPicker")}
       style={styles.btn}
     >
-      <MapPinIcon size={15} color={colors.sel} weight="fill" />
+      <MapPinIcon size={15} color={colors.text} weight="fill" />
       <Text variant="small" weight="semibold" numberOfLines={1} style={{ maxWidth: 130 }}>
         {city?.name ?? t("city.title")}
       </Text>

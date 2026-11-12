@@ -9,7 +9,8 @@ const SEAT_COLOR = {
   std: new THREE.Color(0x8c1119),
   rec: new THREE.Color(0x6a0d14),
   taken: new THREE.Color(0x2a0a0e),
-  mine: new THREE.Color(0x7cf2b4),
+  // Chairs are red velvet, so my seats are lit ivory rather than the red UI accent
+  mine: new THREE.Color(0xe8dcc8),
 };
 
 const M = {

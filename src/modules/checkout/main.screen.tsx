@@ -89,7 +89,7 @@ export default function CheckoutScreen({ route, navigation }: RootScreenProps<"C
             <Text variant="h3" weight="bold">{film.data.title}</Text>
             <Text variant="small" color={colors.muted}>{cinema.data.name} · {t("common:studio", { n: st.studio })}</Text>
             <Text variant="small" color={colors.text}>{formatDate(st.date, "EEEE, d MMMM yyyy", lang)} · {st.time}</Text>
-            <Text variant="small" weight="semibold" color={colors.sel}>
+            <Text variant="small" weight="semibold" color={colors.text}>
               {t("checkout.seats")}: {seats.join(", ")}
             </Text>
           </View>
@@ -118,10 +118,10 @@ export default function CheckoutScreen({ route, navigation }: RootScreenProps<"C
                 accessibilityState={{ checked: active }}
                 style={[styles.method, active && styles.methodOn]}
               >
-                <I size={20} color={active ? colors.sel : colors.muted} />
+                <I size={20} color={active ? colors.text : colors.muted} />
                 <Text weight="medium" style={{ flex: 1 }}>{t(`checkout.method.${id}`)}</Text>
                 {active ? (
-                  <CheckCircleIcon size={20} color={colors.sel} weight="fill" />
+                  <CheckCircleIcon size={20} color={colors.text} weight="fill" />
                 ) : (
                   <CircleIcon size={20} color={colors.dim} />
                 )}
@@ -148,7 +148,7 @@ function Row({ label, value, bold, accent }: { label: string; value: string; bol
   return (
     <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
       <Text color={bold ? colors.text : colors.muted} weight={bold ? "semibold" : "regular"}>{label}</Text>
-      <Text weight={bold ? "bold" : "medium"} variant={bold ? "h3" : "body"} color={accent ? colors.sel : colors.text}>{value}</Text>
+      <Text weight={bold ? "bold" : "medium"} variant={bold ? "h3" : "body"} color={colors.text}>{value}</Text>
     </View>
   );
 }
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.line,
   },
-  methodOn: { borderColor: colors.sel, backgroundColor: "rgba(124,242,180,0.06)" },
+  methodOn: { borderColor: colors.accent, borderWidth: 2 },
   footer: {
     position: "absolute",
     left: 0,

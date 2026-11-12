@@ -19,7 +19,7 @@ export default function SectionHeader({ title, onSeeAll, right }: Props) {
       {right}
       {onSeeAll && (
         <Pressable onPress={onSeeAll} hitSlop={8} accessibilityRole="button">
-          <Text variant="small" weight="semibold" color={colors.sel}>{t("seeAll")}</Text>
+          <Text variant="small" weight="semibold" color={colors.text} style={{ textDecorationLine: "underline" }}>{t("seeAll")}</Text>
         </Pressable>
       )}
     </View>

@@ -100,14 +100,15 @@ const SeatButton = React.memo(function SeatButton({
       style={({ pressed }) => [
         styles.seat,
         shape,
-        { backgroundColor: rec ? colors.recl : colors.seat },
-        taken && { backgroundColor: colors.transparent, borderWidth: 1.5, borderColor: rec ? colors.reclTaken : colors.taken },
+        rec ? styles.recliner : styles.open,
+        taken && styles.taken,
         selected && styles.selected,
-        pressed && !taken && { transform: [{ translateY: -1 }], opacity: 0.85 },
+        pressed && !taken && { opacity: 0.7 },
       ]}
     >
+      {taken && <TakenMark size={size} />}
       {selected && (
-        <Text weight="bold" color={colors.selInk} style={{ fontSize: size * 0.42, lineHeight: size * 0.5 }}>
+        <Text weight="bold" color={colors.onAccent} style={{ fontSize: size * 0.42, lineHeight: size * 0.5 }}>
           {cell.num}
         </Text>
       )}
@@ -117,12 +118,21 @@ const SeatButton = React.memo(function SeatButton({
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center" },
-  seat: { alignItems: "center", justifyContent: "center" },
-  selected: {
-    backgroundColor: colors.sel,
-    shadowColor: colors.sel,
-    shadowOpacity: 0.55,
-    shadowRadius: 9,
-    shadowOffset: { width: 0, height: 0 },
-  },
+  seat: { alignItems: "center", justifyContent: "center", borderWidth: 1.5 },
+  open: { backgroundColor: colors.seatFill, borderColor: colors.seatLine },
+  recliner: { backgroundColor: colors.reclFill, borderColor: colors.recl },
+  taken: { backgroundColor: colors.takenFill, borderColor: colors.takenFill },
+  selected: { backgroundColor: colors.accent, borderColor: colors.accent },
+  bar: { position: "absolute", height: 1.5, borderRadius: 1, backgroundColor: colors.takenMark },
 });
+
+// A cross over taken seats, so they differ by shape and not only by colour (DESIGN.md)
+export function TakenMark({ size }: { size: number }) {
+  const w = size * 0.5;
+  return (
+    <>
+      <View style={[styles.bar, { width: w, transform: [{ rotate: "45deg" }] }]} />
+      <View style={[styles.bar, { width: w, transform: [{ rotate: "-45deg" }] }]} />
+    </>
+  );
+}

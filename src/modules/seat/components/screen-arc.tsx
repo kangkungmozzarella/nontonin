@@ -11,9 +11,9 @@ export default function ScreenArc({ label }: { label: string }) {
       <Svg width="100%" height="100%" viewBox="0 0 480 58" preserveAspectRatio="none">
         <Defs>
           <LinearGradient id="sg" x1="0" x2="1" y1="0" y2="0">
-            <Stop offset="0" stopColor="#7cf2b4" stopOpacity="0" />
+            <Stop offset="0" stopColor="#e9e6df" stopOpacity="0" />
             <Stop offset="0.5" stopColor="#e9e6df" stopOpacity="0.9" />
-            <Stop offset="1" stopColor="#7cf2b4" stopOpacity="0" />
+            <Stop offset="1" stopColor="#e9e6df" stopOpacity="0" />
           </LinearGradient>
           <LinearGradient id="sglow" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#e9e6df" stopOpacity="0.16" />
@@ -30,5 +30,5 @@ export default function ScreenArc({ label }: { label: string }) {
 
 const styles = StyleSheet.create({
   box: { height: 58, width: "100%", marginBottom: 14 },
-  label: { position: "absolute", left: 0, right: 0, top: 30, letterSpacing: 4.5, fontSize: 10 },
+  label: { position: "absolute", left: 0, right: 0, top: 30, fontSize: 12 },
 });

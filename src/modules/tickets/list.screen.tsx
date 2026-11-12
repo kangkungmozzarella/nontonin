@@ -34,7 +34,7 @@ export default function TicketsScreen() {
       <View style={styles.tabs}>
         {(["upcoming", "past"] as const).map((k) => (
           <Chip key={k} active={tab === k} onPress={() => setTab(k)} style={{ paddingVertical: 7 }}>
-            <Text variant="small" weight="semibold" color={tab === k ? colors.selInk : colors.text}>{t(`tickets.${k}`)}</Text>
+            <Text variant="small" weight="semibold" color={tab === k ? colors.onAccent : colors.text}>{t(`tickets.${k}`)}</Text>
           </Chip>
         ))}
       </View>
@@ -76,7 +76,7 @@ function TicketRow({ booking, dim }: { booking: Booking; dim?: boolean }) {
           {booking.cinemaName} · {t("studio", { n: booking.studio })}
         </Text>
         <Text variant="small">{formatDate(booking.date, "EEE, d MMM", lang)} · {booking.time}</Text>
-        <Text variant="small" weight="semibold" color={colors.sel}>{booking.seats.join(", ")}</Text>
+        <Text variant="small" weight="semibold" color={colors.text}>{booking.seats.join(", ")}</Text>
       </View>
     </PressableScale>
   );

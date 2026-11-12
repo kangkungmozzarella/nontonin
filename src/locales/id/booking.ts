@@ -9,7 +9,7 @@ const booking = {
     score: "Skor penonton",
   },
   seat: {
-    screen: "LAYAR",
+    screen: "Layar",
     legend: { available: "Tersedia", taken: "Terisi", recliner: "Recliner", selected: "Dipilih" },
     hint: "Ketuk kursi kosong untuk melihat layar dari posisi itu sebelum memesan.",
     preview3d: "Pratinjau 3D",

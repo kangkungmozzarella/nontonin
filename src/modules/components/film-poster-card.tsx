@@ -34,14 +34,14 @@ export default function FilmPosterCard({ film, width = POSTER_W }: { film: Film;
       </View>
       <Text weight="semibold" numberOfLines={1} style={{ marginTop: 10 }}>{film.title}</Text>
       {film.status === "soon" && film.releaseDate ? (
-        <Text variant="small" color={colors.sel} style={{ marginTop: 2 }}>
+        <Text variant="small" color={colors.muted} style={{ marginTop: 2 }}>
           {t("home:releaseOn", { date: formatDate(film.releaseDate, "d MMM", lang) })}
         </Text>
       ) : (
         <View style={styles.meta}>
           {film.score != null && (
             <>
-              <StarIcon size={12} color={colors.warm} weight="fill" />
+              <StarIcon size={12} color={colors.star} weight="fill" />
               <Text variant="small" color={colors.text} weight="medium">{film.score.toFixed(1)}</Text>
               <Text variant="small" color={colors.dim}>·</Text>
             </>

@@ -8,11 +8,12 @@ export const space = {
   xxl: 32,
 } as const;
 
+// DESIGN.md: pills for buttons, 8 for controls, 12 for cards, 16 for sheets and popups
 export const radius = {
   sm: 8,
   md: 12,
-  lg: 16,
-  xl: 22,
+  lg: 12,
+  xl: 16,
   pill: 999,
 } as const;
 

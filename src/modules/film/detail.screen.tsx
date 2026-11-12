@@ -74,7 +74,7 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
               )}
               {f.score != null && (
                 <>
-                  <StarIcon size={13} color={colors.warm} weight="fill" />
+                  <StarIcon size={13} color={colors.star} weight="fill" />
                   <Text variant="small" weight="semibold">{f.score.toFixed(1)}</Text>
                 </>
               )}
@@ -107,8 +107,8 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
             <View style={styles.scheduleHead}>
               <Text variant="h2" weight="bold" style={{ flex: 1 }}>{t("film.schedule")}</Text>
               <Pressable style={styles.cityLink} onPress={() => navigation.navigate("CityPicker")} hitSlop={8}>
-                <MapPinIcon size={14} color={colors.sel} weight="fill" />
-                <Text variant="small" weight="semibold" color={colors.sel}>{city?.name ?? t("common:city.title")}</Text>
+                <MapPinIcon size={14} color={colors.muted} weight="fill" />
+                <Text variant="small" weight="semibold" color={colors.text}>{city?.name ?? t("common:city.title")}</Text>
               </Pressable>
             </View>
             <DateStrip value={date} onChange={setDate} />
@@ -129,7 +129,7 @@ export default function FilmDetailScreen({ route, navigation }: RootScreenProps<
                   <View key={cinema.id} style={styles.cinemaCard}>
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                       <Text weight="semibold" style={{ flex: 1 }} numberOfLines={1}>{cinema.name}</Text>
-                      <Text variant="small" color={cinema.tier === "premiere" ? colors.warm : colors.muted}>
+                      <Text variant="small" color={cinema.tier === "premiere" ? colors.text : colors.muted}>
                         {t(`common:tier.${cinema.tier}`)} · {t("common:studio", { n: showtimes[0].studio })}
                       </Text>
                     </View>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   rating: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6, borderWidth: 1, borderColor: colors.line },
   block: { paddingHorizontal: GUTTER, marginTop: 24 },
   credits: { marginTop: 14, gap: 6 },
-  soon: { marginHorizontal: GUTTER, padding: 16, borderRadius: radius.lg, backgroundColor: colors.selSoft },
+  soon: { marginHorizontal: GUTTER, padding: 16, borderRadius: radius.lg, backgroundColor: colors.panel },
   scheduleHead: { flexDirection: "row", alignItems: "center", paddingHorizontal: GUTTER, marginTop: 20, marginBottom: 12 },
   cityLink: { flexDirection: "row", alignItems: "center", gap: 4 },
   cinemaCard: { padding: 14, gap: 12, borderRadius: radius.lg, backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.line },

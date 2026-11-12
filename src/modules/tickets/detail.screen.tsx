@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
-import { CubeIcon } from "phosphor-react-native";
+import { ArmchairIcon } from "phosphor-react-native";
 import colors from "@constants/styles/color";
 import { GUTTER, radius } from "@constants/styles/size";
 import { formatDate, formatIDR } from "@helpers/format";
@@ -62,14 +62,14 @@ export default function TicketDetailScreen({ route, navigation }: RootScreenProp
             </View>
             <Text variant="small" color={colors.muted}>{t("tickets.showQr")}</Text>
             <Text variant="tiny" color={colors.dim} style={{ marginTop: 8 }}>{t("tickets.code")}</Text>
-            <Text variant="h2" weight="bold" style={{ letterSpacing: 2 }}>{b.code}</Text>
+            <Text variant="h2" weight="bold" style={{ letterSpacing: 1 }}>{b.code}</Text>
           </View>
         </View>
 
         <Button
           variant="secondary"
           size="lg"
-          icon={<CubeIcon size={18} color={colors.sel} weight="fill" />}
+          icon={<ArmchairIcon size={18} color={colors.text} weight="fill" />}
           label={t("tickets.previewSeat")}
           onPress={() => navigation.navigate("SeatSelect", { showtimeId: b.showtimeId, focusSeat: b.seats[0], readOnly: true })}
         />
@@ -89,7 +89,7 @@ function Field({ label, value, accent }: { label: string; value: string; accent?
   return (
     <View style={{ width: "50%", paddingVertical: 8 }}>
       <Text variant="tiny" color={colors.dim}>{label}</Text>
-      <Text weight="semibold" color={accent ? colors.sel : colors.text} style={{ marginTop: 2 }}>{value}</Text>
+      <Text weight="semibold" color={colors.text} style={{ marginTop: 2 }}>{value}</Text>
     </View>
   );
 }

@@ -44,7 +44,7 @@ export default function CinemasScreen() {
           ListHeaderComponent={
             !hasLocation && status !== "denied" ? (
               <PressableScale onPress={request} style={styles.hint} accessibilityRole="button">
-                <NavigationArrowIcon size={18} color={colors.sel} weight="fill" />
+                <NavigationArrowIcon size={18} color={colors.text} weight="fill" />
                 <Text variant="small" color={colors.text} style={{ flex: 1 }}>{t("cinemas.enableLocation")}</Text>
               </PressableScale>
             ) : undefined
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     gap: 10,
     padding: 14,
     borderRadius: radius.lg,
-    backgroundColor: colors.selSoft,
+    backgroundColor: colors.panel2,
     marginBottom: 4,
   },
 });

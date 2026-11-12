@@ -77,8 +77,8 @@ export default function CityPickerScreen({ navigation }: RootScreenProps<"CityPi
       </View>
 
       <PressableScale onPress={useMyLocation} disabled={locating} style={styles.locate} accessibilityRole="button">
-        <NavigationArrowIcon size={18} color={colors.sel} weight="fill" />
-        <Text weight="semibold" color={colors.sel}>{locating ? t("city.detecting") : t("city.useLocation")}</Text>
+        <NavigationArrowIcon size={18} color={colors.text} weight="fill" />
+        <Text weight="semibold" color={colors.text}>{locating ? t("city.detecting") : t("city.useLocation")}</Text>
       </PressableScale>
 
       {isLoading || error ? (
@@ -97,10 +97,10 @@ export default function CityPickerScreen({ navigation }: RootScreenProps<"CityPi
               <PressableScale scaleTo={0.98} onPress={() => pick(item.id)} style={styles.row} accessibilityRole="button" accessibilityState={{ selected: active }}>
                 <View style={{ flex: 1, gap: 2 }}>
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                    <Text weight="semibold" color={active ? colors.sel : colors.text}>{item.name}</Text>
+                    <Text weight="semibold" color={colors.text}>{item.name}</Text>
                     {item.id === nearestId && (
                       <View style={styles.badge}>
-                        <Text variant="tiny" weight="bold" color={colors.sel}>{t("city.nearest")}</Text>
+                        <Text variant="tiny" weight="semibold" color={colors.muted}>{t("city.nearest")}</Text>
                       </View>
                     )}
                   </View>
@@ -110,7 +110,7 @@ export default function CityPickerScreen({ navigation }: RootScreenProps<"CityPi
                       .join(" · ")}
                   </Text>
                 </View>
-                {active && <CheckIcon size={18} color={colors.sel} weight="bold" />}
+                {active && <CheckIcon size={18} color={colors.text} weight="bold" />}
               </PressableScale>
             );
           }}
@@ -143,5 +143,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.line,
   },
-  badge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6, backgroundColor: colors.selSoft },
+  badge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6, backgroundColor: colors.panel2 },
 });

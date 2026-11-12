@@ -82,7 +82,7 @@ export default function OnboardingScreen({ navigation }: RootScreenProps<"Onboar
 function Dot({ active }: { active: boolean }) {
   const style = useAnimatedStyle(() => ({
     width: withTiming(active ? 22 : 7),
-    backgroundColor: withTiming(active ? colors.sel : colors.seat),
+    backgroundColor: withTiming(active ? colors.text : colors.lineStrong),
   }));
   return <Animated.View style={[styles.dot, style]} />;
 }

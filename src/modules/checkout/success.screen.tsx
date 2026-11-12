@@ -23,7 +23,7 @@ export default function PaymentSuccessScreen({ route, navigation }: RootScreenPr
     <Screen edges={["top", "bottom"]}>
       <View style={styles.center}>
         <Animated.View entering={ZoomIn.springify().damping(12)} style={styles.badge}>
-          <CheckIcon size={44} color={colors.selInk} weight="bold" />
+          <CheckIcon size={44} color={colors.onAccent} weight="bold" />
         </Animated.View>
         <Animated.View entering={FadeInDown.delay(200)} style={{ gap: 8, alignItems: "center" }}>
           <Text variant="display" weight="bold" align="center">{t("checkout.success")}</Text>
@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: colors.sel,
+    backgroundColor: colors.accent,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: colors.sel,
+    shadowColor: colors.black,
     shadowOpacity: 0.6,
     shadowRadius: 30,
   },
