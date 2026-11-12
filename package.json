@@ -56,5 +56,6 @@
     "ts-check": "tsc --noEmit",
     "assets": "node scripts/generate-assets.mjs"
   },
-  "private": true
+  "private": true,
+  "license": "MIT"
 }

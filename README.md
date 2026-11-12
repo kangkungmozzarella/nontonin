@@ -75,3 +75,7 @@ src/
 - **Nama aplikasi:** `APP_NAME` di `src/common/constants/app.ts` dan `name`/`slug`/`scheme` di `app.config.ts`.
 
 Bioskop dan jadwal tayang di aplikasi ini fiktif. Film demo (saat tanpa token TMDB) juga fiktif. Data dan gambar film asli disediakan oleh TMDB; produk ini menggunakan TMDB API tetapi tidak didukung atau disertifikasi oleh TMDB.
+
+## Lisensi
+
+Kode di repo ini memakai lisensi [MIT](LICENSE). Lisensi itu tidak mencakup data dan gambar film dari TMDB, yang tetap tunduk pada ketentuan TMDB. Konsep UI/UX terinspirasi dari "Meridian" karya Ramin Nasibov.
