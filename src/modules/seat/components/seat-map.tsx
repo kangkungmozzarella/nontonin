@@ -15,16 +15,12 @@ interface Props {
 const SIDE_PAD = 14,
   LABEL_W = 14;
 
-// Seats never go below 26pt, above the 24pt WCAG 2.2 target minimum; on narrow
-// phones the map is wider than the screen and scrolls sideways instead of shrinking
-const MIN_SEAT = 26,
-  MAX_SEAT = 32;
-
+// The whole map always fits the screen width (no sideways scrolling). Seats get
+// as big as the width allows, and each hit area also covers half the gap around it.
 export function useSeatMetrics() {
   const { width } = useWindowDimensions();
-  const g = Math.max(4, Math.min(6, width * 0.01));
-  const fit = (width - SIDE_PAD * 2 - LABEL_W * 2 - 18 * g) / 15.7;
-  const s = Math.max(MIN_SEAT, Math.min(MAX_SEAT, fit));
+  const g = Math.max(3, Math.min(6, width * 0.009));
+  const s = Math.max(13, Math.min(32, (width - SIDE_PAD * 2 - LABEL_W * 2 - 18 * g) / 15.7));
   return { s, g };
 }
 

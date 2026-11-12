@@ -41,7 +41,6 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
   const toast = useToast();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
-  const mapScroll = React.useRef<React.ComponentRef<typeof ScrollView>>(null);
   const { bookings } = useBookings();
 
   const showtime = useGetShowtime(showtimeId);
@@ -285,20 +284,8 @@ export default function SeatSelectScreen({ route, navigation }: RootScreenProps<
           />
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingTop: 12, paddingBottom: 150 + insets.bottom }}>
-          {/* Wider than the screen on narrow phones: scroll sideways, opening centred */}
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            ref={mapScroll}
-            onContentSizeChange={(w) => mapScroll.current?.scrollTo({ x: Math.max(0, (w - width) / 2), animated: false })}
-            style={{ marginHorizontal: -14 }}
-            contentContainerStyle={{ paddingHorizontal: 14, minWidth: width }}
-          >
-            <View style={{ flexGrow: 1 }}>
-              <ScreenArc label={t("seat.screen")} />
-              <SeatMap taken={taken} selected={mine} previewing={mode === "seat" ? current?.id : null} onPressSeat={openSeat} />
-            </View>
-          </ScrollView>
+          <ScreenArc label={t("seat.screen")} />
+          <SeatMap taken={taken} selected={mine} previewing={mode === "seat" ? current?.id : null} onPressSeat={openSeat} />
           <View style={styles.legend}>
             <Legend
               label={t("seat.legend.available")}
